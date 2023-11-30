@@ -4,9 +4,8 @@
  */
 package app.back.POJOS;
 
-import jakarta.persistence.*;
 import java.io.Serializable;
-import javax.xml.bind.annotation.XmlRootElement;
+import jakarta.persistence.*;
 
 /**
  *
@@ -14,7 +13,6 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @Entity
 @Table(name = "JORNADA")
-@XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Jornada.findAll", query = "SELECT j FROM Jornada j"),
     @NamedQuery(name = "Jornada.findByNumjornada", query = "SELECT j FROM Jornada j WHERE j.numjornada = :numjornada"),

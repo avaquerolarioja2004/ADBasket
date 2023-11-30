@@ -4,20 +4,23 @@
  */
 package app.back;
 
-import app.back.POJOS.Equipo;
-import app.back.repository.EquipoRepository;
-import jakarta.persistence.*;
+import java.util.ArrayList;
 
 /**
  *
  * @author mrpox
  */
 public class Test {
+
     public static void main(String[] args) {
-        EntityManagerFactory emf=Persistence.createEntityManagerFactory("persistenciaSqlite");
-        EntityManager eM = emf.createEntityManager();
-        Equipo e=new Equipo(1);
-        System.out.println(EquipoRepository.guardarEquipo(eM, e));
-    
+        ArrayList<String> lista = Metodos.getJornadas();
+        if (lista.size() < 1) {
+            System.out.println("Vacio");
+        } else {
+            for (String jornada : Metodos.getJornadas()) {
+                System.out.println(jornada);
+            }
+
+        }
     }
 }
