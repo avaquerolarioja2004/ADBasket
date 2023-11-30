@@ -5,186 +5,198 @@
 package app.back.POJOS;
 
 import jakarta.persistence.*;
-import org.hibernate.annotations.Check;
+import java.io.Serializable;
+import javax.xml.bind.annotation.XmlRootElement;
+
+
 
 /**
  *
  * @author mrpox
  */
-
-
 @Entity
 @Table(name = "EQUIPO")
-@Check(constraints = "jugadosCasa = ganadosCasa + perdidosCasa and jugadosFuera = ganadosFuera + perdidosFuera")
-public class Equipo {
+@XmlRootElement
+@NamedQueries({
+    @NamedQuery(name = "Equipo.findAll", query = "SELECT e FROM Equipo e"),
+    @NamedQuery(name = "Equipo.findByIdequipo", query = "SELECT e FROM Equipo e WHERE e.idequipo = :idequipo"),
+    @NamedQuery(name = "Equipo.findByNombre", query = "SELECT e FROM Equipo e WHERE e.nombre = :nombre"),
+    @NamedQuery(name = "Equipo.findByCiudad", query = "SELECT e FROM Equipo e WHERE e.ciudad = :ciudad"),
+    @NamedQuery(name = "Equipo.findByJugadosCasa", query = "SELECT e FROM Equipo e WHERE e.jugadosCasa = :jugadosCasa"),
+    @NamedQuery(name = "Equipo.findByGanadosCasa", query = "SELECT e FROM Equipo e WHERE e.ganadosCasa = :ganadosCasa"),
+    @NamedQuery(name = "Equipo.findByPerdidosCasa", query = "SELECT e FROM Equipo e WHERE e.perdidosCasa = :perdidosCasa"),
+    @NamedQuery(name = "Equipo.findByPuntosFavorCasa", query = "SELECT e FROM Equipo e WHERE e.puntosFavorCasa = :puntosFavorCasa"),
+    @NamedQuery(name = "Equipo.findByPuntosContraCasa", query = "SELECT e FROM Equipo e WHERE e.puntosContraCasa = :puntosContraCasa"),
+    @NamedQuery(name = "Equipo.findByJugadosFuera", query = "SELECT e FROM Equipo e WHERE e.jugadosFuera = :jugadosFuera"),
+    @NamedQuery(name = "Equipo.findByGanadosFuera", query = "SELECT e FROM Equipo e WHERE e.ganadosFuera = :ganadosFuera"),
+    @NamedQuery(name = "Equipo.findByPerdidosFuera", query = "SELECT e FROM Equipo e WHERE e.perdidosFuera = :perdidosFuera"),
+    @NamedQuery(name = "Equipo.findByPuntosFavorFuera", query = "SELECT e FROM Equipo e WHERE e.puntosFavorFuera = :puntosFavorFuera"),
+    @NamedQuery(name = "Equipo.findByPuntosContraFuera", query = "SELECT e FROM Equipo e WHERE e.puntosContraFuera = :puntosContraFuera")})
+public class Equipo implements Serializable {
 
+    private static final long serialVersionUID = 1L;
     @Id
     @Column(name = "idequipo")
-    private int idEquipo;
-
-    @Column(name = "nombre", length = 25)
+    private Integer idequipo;
+    @Column(name = "nombre")
     private String nombre;
-
-    @Column(name = "ciudad", length = 25)
+    @Column(name = "ciudad")
     private String ciudad;
-
     @Column(name = "jugadosCasa")
-    private int jugadosCasa;
-
+    private Integer jugadosCasa;
     @Column(name = "ganadosCasa")
-    private int ganadosCasa;
-
+    private Integer ganadosCasa;
     @Column(name = "perdidosCasa")
-    private int perdidosCasa;
-
+    private Integer perdidosCasa;
     @Column(name = "puntosFavorCasa")
-    private int puntosFavorCasa;
-
+    private Integer puntosFavorCasa;
     @Column(name = "puntosContraCasa")
-    private int puntosContraCasa;
-
+    private Integer puntosContraCasa;
     @Column(name = "jugadosFuera")
-    private int jugadosFuera;
-
+    private Integer jugadosFuera;
     @Column(name = "ganadosFuera")
-    private int ganadosFuera;
-
+    private Integer ganadosFuera;
     @Column(name = "perdidosFuera")
-    private int perdidosFuera;
-
+    private Integer perdidosFuera;
     @Column(name = "puntosFavorFuera")
-    private int puntosFavorFuera;
-
+    private Integer puntosFavorFuera;
     @Column(name = "puntosContraFuera")
-    private int puntosContraFuera;
+    private Integer puntosContraFuera;
 
-    // Constructor, getters y setters
-
-    // Constructor por defecto
     public Equipo() {
     }
 
-    // Constructor con parámetros
-    public Equipo(int idEquipo, String nombre, String ciudad, int jugadosCasa, int ganadosCasa, int perdidosCasa,
-                  int puntosFavorCasa, int puntosContraCasa, int jugadosFuera, int ganadosFuera, int perdidosFuera,
-                  int puntosFavorFuera, int puntosContraFuera) {
-        this.idEquipo = idEquipo;
-        this.nombre = nombre;
-        this.ciudad = ciudad;
-        this.jugadosCasa = jugadosCasa;
-        this.ganadosCasa = ganadosCasa;
-        this.perdidosCasa = perdidosCasa;
-        this.puntosFavorCasa = puntosFavorCasa;
-        this.puntosContraCasa = puntosContraCasa;
-        this.jugadosFuera = jugadosFuera;
-        this.ganadosFuera = ganadosFuera;
-        this.perdidosFuera = perdidosFuera;
-        this.puntosFavorFuera = puntosFavorFuera;
-        this.puntosContraFuera = puntosContraFuera;
+    public Equipo(Integer idequipo) {
+        this.idequipo = idequipo;
     }
 
-    public int getIdEquipo() {
-        return idEquipo;
+    public Integer getIdequipo() {
+        return idequipo;
+    }
+
+    public void setIdequipo(Integer idequipo) {
+        this.idequipo = idequipo;
     }
 
     public String getNombre() {
         return nombre;
     }
 
-    public String getCiudad() {
-        return ciudad;
-    }
-
-    public int getJugadosCasa() {
-        return jugadosCasa;
-    }
-
-    public int getGanadosCasa() {
-        return ganadosCasa;
-    }
-
-    public int getPerdidosCasa() {
-        return perdidosCasa;
-    }
-
-    public int getPuntosFavorCasa() {
-        return puntosFavorCasa;
-    }
-
-    public int getPuntosContraCasa() {
-        return puntosContraCasa;
-    }
-
-    public int getJugadosFuera() {
-        return jugadosFuera;
-    }
-
-    public int getGanadosFuera() {
-        return ganadosFuera;
-    }
-
-    public int getPerdidosFuera() {
-        return perdidosFuera;
-    }
-
-    public int getPuntosFavorFuera() {
-        return puntosFavorFuera;
-    }
-
-    public int getPuntosContraFuera() {
-        return puntosContraFuera;
-    }
-
-    public void setIdEquipo(int idEquipo) {
-        this.idEquipo = idEquipo;
-    }
-
     public void setNombre(String nombre) {
         this.nombre = nombre;
+    }
+
+    public String getCiudad() {
+        return ciudad;
     }
 
     public void setCiudad(String ciudad) {
         this.ciudad = ciudad;
     }
 
-    public void setJugadosCasa(int jugadosCasa) {
+    public Integer getJugadosCasa() {
+        return jugadosCasa;
+    }
+
+    public void setJugadosCasa(Integer jugadosCasa) {
         this.jugadosCasa = jugadosCasa;
     }
 
-    public void setGanadosCasa(int ganadosCasa) {
+    public Integer getGanadosCasa() {
+        return ganadosCasa;
+    }
+
+    public void setGanadosCasa(Integer ganadosCasa) {
         this.ganadosCasa = ganadosCasa;
     }
 
-    public void setPerdidosCasa(int perdidosCasa) {
+    public Integer getPerdidosCasa() {
+        return perdidosCasa;
+    }
+
+    public void setPerdidosCasa(Integer perdidosCasa) {
         this.perdidosCasa = perdidosCasa;
     }
 
-    public void setPuntosFavorCasa(int puntosFavorCasa) {
+    public Integer getPuntosFavorCasa() {
+        return puntosFavorCasa;
+    }
+
+    public void setPuntosFavorCasa(Integer puntosFavorCasa) {
         this.puntosFavorCasa = puntosFavorCasa;
     }
 
-    public void setPuntosContraCasa(int puntosContraCasa) {
+    public Integer getPuntosContraCasa() {
+        return puntosContraCasa;
+    }
+
+    public void setPuntosContraCasa(Integer puntosContraCasa) {
         this.puntosContraCasa = puntosContraCasa;
     }
 
-    public void setJugadosFuera(int jugadosFuera) {
+    public Integer getJugadosFuera() {
+        return jugadosFuera;
+    }
+
+    public void setJugadosFuera(Integer jugadosFuera) {
         this.jugadosFuera = jugadosFuera;
     }
 
-    public void setGanadosFuera(int ganadosFuera) {
+    public Integer getGanadosFuera() {
+        return ganadosFuera;
+    }
+
+    public void setGanadosFuera(Integer ganadosFuera) {
         this.ganadosFuera = ganadosFuera;
     }
 
-    public void setPerdidosFuera(int perdidosFuera) {
+    public Integer getPerdidosFuera() {
+        return perdidosFuera;
+    }
+
+    public void setPerdidosFuera(Integer perdidosFuera) {
         this.perdidosFuera = perdidosFuera;
     }
 
-    public void setPuntosFavorFuera(int puntosFavorFuera) {
+    public Integer getPuntosFavorFuera() {
+        return puntosFavorFuera;
+    }
+
+    public void setPuntosFavorFuera(Integer puntosFavorFuera) {
         this.puntosFavorFuera = puntosFavorFuera;
     }
 
-    public void setPuntosContraFuera(int puntosContraFuera) {
+    public Integer getPuntosContraFuera() {
+        return puntosContraFuera;
+    }
+
+    public void setPuntosContraFuera(Integer puntosContraFuera) {
         this.puntosContraFuera = puntosContraFuera;
     }
-}
 
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (idequipo != null ? idequipo.hashCode() : 0);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof Equipo)) {
+            return false;
+        }
+        Equipo other = (Equipo) object;
+        if ((this.idequipo == null && other.idequipo != null) || (this.idequipo != null && !this.idequipo.equals(other.idequipo))) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "app.back.POJOS.Equipo[ idequipo=" + idequipo + " ]";
+    }
+    
+}
