@@ -4,61 +4,50 @@
  */
 package app.back.POJOS;
 
+import app.back.POJOS.Equipo;
 import jakarta.persistence.*;
-
-/**
- *
- * @author mrpox
- */
+import java.io.Serializable;
 
 @Entity
 @Table(name = "PARTIDO")
-public class Partido {
+@NamedQueries({
+    @NamedQuery(name = "Partido.findAll", query = "SELECT p FROM Partido p"),
+    @NamedQuery(name = "Partido.findById", query = "SELECT p FROM Partido p WHERE p.idPartido = :idPartido"),
+    @NamedQuery(name = "Partido.findByNumjornada", query = "SELECT p FROM Partido p WHERE p.numjornada = :numjornada"),
+    @NamedQuery(name = "Partido.findByEquipoLocal", query = "SELECT p FROM Partido p WHERE p.equipoLocal = :equipoLocal"),
+    @NamedQuery(name = "Partido.findByEquipoVisitante", query = "SELECT p FROM Partido p WHERE p.equipoVisitante = :equipoVisitante")
+})
+public class Partido implements Serializable {
 
     @Id
     @Column(name = "idPartido")
-    private int idPartido;
+    private Integer idPartido;
 
     @Column(name = "numjornada", nullable = false)
-    private int numJornada;
+    private Integer numjornada;
 
     @ManyToOne
-    @JoinColumn(name = "equipoLocal", referencedColumnName = "idequipo", nullable = false)
+    @JoinColumn(name = "equipoLocal", nullable = false)
     private Equipo equipoLocal;
 
     @ManyToOne
-    @JoinColumn(name = "equipoVisitante", referencedColumnName = "idequipo")
+    @JoinColumn(name = "equipoVisitante")
     private Equipo equipoVisitante;
 
-    // Constructor, getters y setters
-
-    // Constructor por defecto
-    public Partido() {
-    }
-
-    // Constructor con parámetros
-    public Partido(int numJornada, Equipo equipoLocal, Equipo equipoVisitante) {
-        this.numJornada = numJornada;
-        this.equipoLocal = equipoLocal;
-        this.equipoVisitante = equipoVisitante;
-    }
-
-    // Getters y Setters
-
-    public int getIdPartido() {
+    public Integer getIdPartido() {
         return idPartido;
     }
 
-    public void setIdPartido(int idPartido) {
+    public void setIdPartido(Integer idPartido) {
         this.idPartido = idPartido;
     }
 
-    public int getNumJornada() {
-        return numJornada;
+    public Integer getNumjornada() {
+        return numjornada;
     }
 
-    public void setNumJornada(int numJornada) {
-        this.numJornada = numJornada;
+    public void setNumjornada(Integer numjornada) {
+        this.numjornada = numjornada;
     }
 
     public Equipo getEquipoLocal() {
@@ -76,5 +65,14 @@ public class Partido {
     public void setEquipoVisitante(Equipo equipoVisitante) {
         this.equipoVisitante = equipoVisitante;
     }
-}
 
+    public String getNombreEquipoLocal() {
+        return equipoLocal.getNombre();
+    }
+
+    public String getNombreEquipoVisitante() {
+        return equipoVisitante.getNombre();
+    
+    }
+    
+}
