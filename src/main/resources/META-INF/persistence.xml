@@ -5,6 +5,7 @@
     <class>app.back.POJOS.Equipo</class>
     <class>app.back.POJOS.Resultado</class>
     <class>app.back.POJOS.Partido</class>
+    <class>app.back.POJOS.VClasifica</class>
     <exclude-unlisted-classes>true</exclude-unlisted-classes>
     <properties>
       <property name="jakarta.persistence.jdbc.driver" value="org.sqlite.JDBC"/>

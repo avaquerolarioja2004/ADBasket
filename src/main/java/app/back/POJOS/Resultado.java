@@ -13,6 +13,11 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name = "RESULTADO")
+@NamedQuery(
+        name = "Resultado.findLatestResult",
+        query = "SELECT r FROM Resultado r ORDER BY r.idResultado DESC"
+)
+
 public class Resultado {
 
     @Id
@@ -43,7 +48,8 @@ public class Resultado {
     }
 
     // Constructor con parámetros
-    public Resultado(int numJornada, Equipo equipoLocal, Equipo equipoVisitante, int puntosLocal, int puntosVisitante) {
+    public Resultado(int idResultado,int numJornada, Equipo equipoLocal, Equipo equipoVisitante, int puntosLocal, int puntosVisitante) {
+        this.idResultado=idResultado;
         this.numJornada = numJornada;
         this.equipoLocal = equipoLocal;
         this.equipoVisitante = equipoVisitante;

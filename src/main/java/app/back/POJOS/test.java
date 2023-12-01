@@ -4,9 +4,6 @@
  */
 package app.back.POJOS;
 import app.back.Metodos;
-import jakarta.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  *
@@ -15,7 +12,7 @@ import java.util.List;
 public class test {
 
     public static void main(String[] args) {
-        System.out.println(Metodos.getIdEquipoByName("Barcelona"));
+        System.out.println(Metodos.getInfoEquipos(1));
     }
 
 }
