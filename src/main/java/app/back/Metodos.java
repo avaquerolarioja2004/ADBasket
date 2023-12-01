@@ -41,7 +41,7 @@ public class Metodos {
         ArrayList<String> resultadoJornadas = new ArrayList<>();
 
         for (Jornada jornada : lista) {
-            result = jornada.getNumjornada() + "@@" + jornada.getFecha();
+            result = jornada.getNumjornada() + ";" + jornada.getFecha();
             resultadoJornadas.add(result);
         }
         return resultadoJornadas;
@@ -62,7 +62,7 @@ public class Metodos {
             while (rs.next()) {
                 String equipoLocal = rs.getString("EquipoLocal");
                 String equipoVisitante = rs.getString("EquipoVisitante");
-                lista.add(equipoLocal + "@@" + equipoVisitante);
+                lista.add(equipoLocal + ";" + equipoVisitante);
             }
         } catch (SQLException ex) {
             System.err.println("Error en la consulta");
