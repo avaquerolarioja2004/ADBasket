@@ -12,7 +12,9 @@ import app.back.Metodos;
 public class test {
 
     public static void main(String[] args) {
-        System.out.println(Metodos.getInfoEquipos(1));
+        for (String clasificacione : Metodos.getClasificaciones()) {
+            System.out.println(clasificacione);
+        }
     }
 
 }

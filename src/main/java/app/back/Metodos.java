@@ -97,7 +97,13 @@ public class Metodos {
     }
 
     public static boolean grabar(int jornada, int idEL, int pEL, int idEV, int pEV) {
+        // JPQL
         try {
+            int idResultado = getFinalId();
+            if (idResultado==-1) {
+                System.err.println("Error en el id del resultado");
+                return false;
+            }
             Query qP = em.createQuery("SELECT p FROM Partido p "
                     + "WHERE p.numjornada = :numJornada "
                     + "AND p.equipoLocal.idequipo = :idEquipoLocal "
@@ -110,7 +116,7 @@ public class Metodos {
             Equipo eV = (Equipo) qV.getSingleResult();
             Partido partido = (Partido) qP.getSingleResult();
             em.getTransaction().begin();
-            Resultado resultado = new Resultado(getFinalId() + 1, jornada, eL, eV, pEL, pEV);
+            Resultado resultado = new Resultado(idResultado + 1, jornada, eL, eV, pEL, pEV);
             em.persist(resultado);
             em.remove(partido);
             em.getTransaction().commit();
@@ -123,20 +129,73 @@ public class Metodos {
         }
     }
 
-    public static String getInfoEquipos(int idEquipo) {
-        // No funciona
-        CriteriaBuilder cb = em.getCriteriaBuilder();
-        CriteriaQuery<VClasifica> cq = cb.createQuery(VClasifica.class);
-        Root<VClasifica> root = cq.from(VClasifica.class);
-        Predicate predicate = cb.equal(root.get("idEquipo"), idEquipo);
-        cq.where(predicate);
-        TypedQuery<VClasifica> query = em.createQuery(cq);
-        VClasifica vs=query.getSingleResult();
-        String resultado=vs.getNombre()+";"+vs.getPj1()+";"+vs.getPg1()+";"
-                +vs.getPp1()+";"+vs.getPf1()+";"+vs.getPc1()+";"+vs.getPtos1()+";"+vs.getPj2()+";"+vs.getPg2()+";"
-                +vs.getPp2()+";"+vs.getPf2()+";"+vs.getPc2()+";"+vs.getPtos2()+vs.getPj()+";"+vs.getPg()+";"
-                +vs.getPp()+";"+vs.getPf()+";"+vs.getPc()+";"+vs.getPtos();
-        return resultado;
+    public static String getInfoEquipo(int idEquipo) {
+        //Criteria
+        CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder();
+        CriteriaQuery<VClasifica> criteriaQuery = criteriaBuilder.createQuery(VClasifica.class);
+        Root<VClasifica> root = criteriaQuery.from(VClasifica.class);
+        Predicate predicate = criteriaBuilder.equal(root.get("nombre"), getNombreById(idEquipo));
+        criteriaQuery.where(predicate);
+        List<VClasifica> resultados = em.createQuery(criteriaQuery).getResultList();
+        VClasifica vs = resultados.get(0);
+        if (vs != null) {
+            String resultado = vs.getNombre() + ";" + vs.getPj1() + ";" + vs.getPg1() + ";"
+                    + vs.getPp1() + ";" + vs.getPf1() + ";" + vs.getPc1() + ";" + vs.getPtos1() + ";" + vs.getPj2() + ";" + vs.getPg2() + ";"
+                    + vs.getPp2() + ";" + vs.getPf2() + ";" + vs.getPc2() + ";" + vs.getPtos2() + vs.getPj() + ";" + vs.getPg() + ";"
+                    + vs.getPp() + ";" + vs.getPf() + ";" + vs.getPc() + ";" + vs.getPtos();
+            return resultado;
+        } else {
+            return "";
+        }
+    }
+
+    public static String getInfoEquipo(String nombreEquipo) {
+        //Criteria
+        CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder();
+        CriteriaQuery<VClasifica> criteriaQuery = criteriaBuilder.createQuery(VClasifica.class);
+        Root<VClasifica> root = criteriaQuery.from(VClasifica.class);
+        Predicate predicate = criteriaBuilder.equal(root.get("nombre"), nombreEquipo);
+        criteriaQuery.where(predicate);
+        List<VClasifica> resultados = em.createQuery(criteriaQuery).getResultList();
+        VClasifica vs = resultados.get(0);
+        if (vs != null) {
+            String resultado = vs.getNombre() + ";" + vs.getPj1() + ";" + vs.getPg1() + ";"
+                    + vs.getPp1() + ";" + vs.getPf1() + ";" + vs.getPc1() + ";" + vs.getPtos1() + ";" + vs.getPj2() + ";" + vs.getPg2() + ";"
+                    + vs.getPp2() + ";" + vs.getPf2() + ";" + vs.getPc2() + ";" + vs.getPtos2() + vs.getPj() + ";" + vs.getPg() + ";"
+                    + vs.getPp() + ";" + vs.getPf() + ";" + vs.getPc() + ";" + vs.getPtos();
+            return resultado;
+        } else {
+            return "";
+        }
+    }
+    
+    public static ArrayList<String> getResultadosEquipo(int idEquipo){
+        ArrayList<Resultado> resultados=new ArrayList<>();
+        Query q;
+        Jornada j;
+        ArrayList<String> out=new ArrayList<>();
+        String JPQL="SELECT r FROM Resultado r WHERE r.equipoLocal =: idequipo OR r.equipoVisitante =: idequipo";
+        String fechaJornada="SELECT j FROM Jornada j WHERE j.numjornada =: idJornada";
+        Query query=em.createQuery(JPQL).setParameter("idequipo", getEquipo(idEquipo));
+        resultados = (ArrayList<Resultado>) query.getResultList();
+        for (Resultado resultado : resultados) {
+            q=em.createQuery(fechaJornada).setParameter("idJornada", resultado.getNumJornada());
+            j=(Jornada)q.getSingleResult();
+            out.add(resultado.getNumJornada()+";"+j.getFecha()+";"+resultado.getEquipoLocal().getNombre()+";"+resultado.getEquipoVisitante().getNombre()+
+                    ";"+resultado.getPuntosLocal()+";"+resultado.getPuntosVisitante());
+        }
+        return out;
+    }
+    
+    public static ArrayList<String> getClasificaciones(){
+        //Falta que lo ordene por puntos
+        ArrayList<String> out=new ArrayList<>();
+        Query q=em.createQuery("SELECT v FROM VClasifica v");
+        ArrayList<VClasifica> l=(ArrayList<VClasifica>) q.getResultList();
+        for (VClasifica o : l) {
+            out.add(o.getNombre()+";"+o.getPj()+";"+o.getPg()+";"+o.getPp()+";"+o.getPf()+";"+o.getPc()+";"+o.getPtos());
+        }
+        return out;
     }
 
     private static int getFinalId() {
@@ -151,5 +210,16 @@ public class Metodos {
             result = -1;
         }
         return result;
+    }
+
+    public static String getNombreById(int id) {
+        Query query = em.createNamedQuery("Equipo.findByIdequipo").setParameter("idequipo", id);
+        Equipo e = (Equipo) query.getSingleResult();
+        return e.getNombre();
+    }
+    
+    private static Equipo getEquipo(int idEquipo){
+        Query q=em.createNamedQuery("Equipo.findByIdequipo").setParameter("idequipo", idEquipo);
+        return (Equipo) q.getSingleResult();
     }
 }
