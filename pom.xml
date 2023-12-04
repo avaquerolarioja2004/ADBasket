@@ -32,6 +32,11 @@
             <groupId>net.kemitix</groupId>
             <artifactId>sqlite-dialect</artifactId>
             <version>0.1.0</version>
-        </dependency>  
+        </dependency>
+        <dependency>
+            <groupId>org.netbeans.external</groupId>
+            <artifactId>AbsoluteLayout</artifactId>
+            <version>RELEASE180</version>
+        </dependency>
     </dependencies>
 </project>
