@@ -33,7 +33,6 @@ public class EleccionPartido extends javax.swing.JFrame {
     
         try {
             Connection c = Libreria.creaConexion("sqlite", "jdbc:sqlite:C:\\Users\\elipu\\OneDrive\\Escritorio\\AD_ServersYConectores\\SGBD\\sqlite\\BALONCESTO.db");
-
             if (c != null) {
                 ArrayList<String> partidos = app.back.Metodos.getPartidosJornada(idJornada, c);
                 DefaultTableModel model = (DefaultTableModel) tb_TablaPartidos.getModel();
@@ -41,11 +40,9 @@ public class EleccionPartido extends javax.swing.JFrame {
                     String[] datosPartido = partido.split(";");
                     model.addRow(datosPartido);
                 }
-                // Don't forget to close the connection when you are done with it
                 c.close();
             } else {
-                // Handle the case where the connection is not established
-                System.out.println("Failed to establish a connection to the database.");
+                System.out.println("Error al establecer la conexion a la base de datos.");
             }
         } catch (SQLException e) {
             // Handle SQLException

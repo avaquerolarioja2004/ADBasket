@@ -13,8 +13,7 @@ public class ConsultaInfoEquipo extends javax.swing.JFrame {
         ArrayList<String> jornadas = app.back.Metodos.getJornadas();
         for(String item : jornadas){
             this.cb_SeleccEquipo.addItem("Jornada "+item);
-        } 
-            
+        }             
     }
     
     @SuppressWarnings("unchecked")
@@ -75,6 +74,7 @@ public class ConsultaInfoEquipo extends javax.swing.JFrame {
         cb_SeleccEquipo.setBackground(new java.awt.Color(218, 166, 100));
         cb_SeleccEquipo.setEditable(true);
         cb_SeleccEquipo.setFont(new java.awt.Font("NSimSun", 0, 24)); // NOI18N
+        cb_SeleccEquipo.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
         cb_SeleccEquipo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cb_SeleccEquipoActionPerformed(evt);
@@ -190,6 +190,7 @@ public class ConsultaInfoEquipo extends javax.swing.JFrame {
         btn_Atras.setBackground(new java.awt.Color(218, 166, 100));
         btn_Atras.setFont(new java.awt.Font("NSimSun", 1, 20)); // NOI18N
         btn_Atras.setText("Atrás");
+        btn_Atras.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
         btn_Atras.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_AtrasActionPerformed(evt);
@@ -201,7 +202,10 @@ public class ConsultaInfoEquipo extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 992, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 980, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -215,10 +219,8 @@ public class ConsultaInfoEquipo extends javax.swing.JFrame {
     private void rbtn_GeneralActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtn_GeneralActionPerformed
         // TODO add your handling code here:
         if (rbtn_General.isSelected()) {
-        // Desactivar el JFrame actual (ConsultaInfoEquipo)
         this.setVisible(false);
 
-        // Crear y mostrar el nuevo JFrame (ConsultaInfoGeneral)
         ConsultaInfoGeneral consultaInfoGeneral = new ConsultaInfoGeneral();
         consultaInfoGeneral.setVisible(true);
     }

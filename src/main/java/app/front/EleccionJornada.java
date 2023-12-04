@@ -72,7 +72,7 @@ public class EleccionJornada extends javax.swing.JFrame {
         jPanel1.add(btn_ConsultarInfo, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 270, 280, 50));
 
         img_Fondo.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        jPanel1.add(img_Fondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 640, 400));
+        jPanel1.add(img_Fondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(-10, 0, 650, 400));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -97,11 +97,8 @@ public class EleccionJornada extends javax.swing.JFrame {
     private void btn_ConsultarInfoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_ConsultarInfoActionPerformed
         idJornada = cb_SeleccionJornada.getSelectedIndex()+1;
         
-        if (eleccionPartido == null) {
-            eleccionPartido = new EleccionPartido();
-        }
+        EleccionPartido eleccionPartido = new EleccionPartido();
 
-        //eleccionPartido.getComboBox().setVisible(true);
         eleccionPartido.setVisible(true);
         
         this.dispose();
