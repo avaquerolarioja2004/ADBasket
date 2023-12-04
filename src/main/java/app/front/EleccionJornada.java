@@ -1,14 +1,19 @@
 package app.front;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
 
 public class EleccionJornada extends javax.swing.JFrame {
 
     private JComboBox <String> comboBox;
+    private EleccionPartido eleccionPartido;
+    public static int idJornada; 
     
-    public EleccionJornada() {
+    public EleccionJornada() throws SQLException {
         initComponents();
         img_Fondo.setIcon(new ImageIcon("./src/main/java/img/Img2.jpg"));
         rellenarJornadas();
@@ -16,12 +21,10 @@ public class EleccionJornada extends javax.swing.JFrame {
     }
     
     public void rellenarJornadas() {
-        
         ArrayList<String> jornadas = app.back.Metodos.getJornadas();
         for(String item : jornadas){
             this.cb_SeleccionJornada.addItem("Jornada "+item);
-        }
-        
+        }      
             
     }
 
@@ -92,13 +95,21 @@ public class EleccionJornada extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_ConsultarInfoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_ConsultarInfoActionPerformed
-        // TODO add your handling code here:
+        idJornada = cb_SeleccionJornada.getSelectedIndex()+1;
+        
+        if (eleccionPartido == null) {
+            eleccionPartido = new EleccionPartido();
+        }
+
+        //eleccionPartido.getComboBox().setVisible(true);
+        eleccionPartido.setVisible(true);
+        
+        this.dispose();
     }//GEN-LAST:event_btn_ConsultarInfoActionPerformed
 
     private void cb_SeleccionJornadaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cb_SeleccionJornadaActionPerformed
         
     }//GEN-LAST:event_cb_SeleccionJornadaActionPerformed
-
     
     public static void main(String args[]) {
         try {
@@ -119,7 +130,11 @@ public class EleccionJornada extends javax.swing.JFrame {
         }
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new EleccionJornada().setVisible(true);
+                try {
+                    new EleccionJornada().setVisible(true);
+                } catch (SQLException ex) {
+                    Logger.getLogger(EleccionJornada.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }
