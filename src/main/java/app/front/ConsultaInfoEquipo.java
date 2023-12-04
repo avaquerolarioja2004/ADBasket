@@ -4,16 +4,26 @@ package app.front;
 import java.util.ArrayList;
 
 public class ConsultaInfoEquipo extends javax.swing.JFrame {
-
+    
+    public String nombreEquipo;
+    public int idEquipo = app.back.Metodos.getIdEquipoByName(nombreEquipo);
+    
     public ConsultaInfoEquipo() {
+        this.setLocationRelativeTo(null);
+        this.setResizable(false);
         initComponents();
+        rellenarEquipos();
     }
 
-    public void rellenarEquipos() { //Falta un metodo que me de los equipos
-        ArrayList<String> jornadas = app.back.Metodos.getJornadas();
-        for(String item : jornadas){
-            this.cb_SeleccEquipo.addItem("Jornada "+item);
+    public void rellenarEquipos() { 
+        ArrayList<String> equipos = app.back.Metodos.getNombresEquipos();
+        for(String item : equipos){
+            this.cb_SeleccEquipo.addItem(item);
         }             
+    }
+    
+    public void rellenarTabla(int idEquipo){
+        
     }
     
     @SuppressWarnings("unchecked")
@@ -45,7 +55,6 @@ public class ConsultaInfoEquipo extends javax.swing.JFrame {
         jPanel1.setBackground(new java.awt.Color(243, 209, 165));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jTable2.setBackground(new java.awt.Color(218, 166, 100));
         jTable2.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null}
@@ -91,7 +100,6 @@ public class ConsultaInfoEquipo extends javax.swing.JFrame {
         txt_PartidosEnCasa.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jPanel1.add(txt_PartidosEnCasa, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 500, -1, -1));
 
-        jTable3.setBackground(new java.awt.Color(218, 166, 100));
         jTable3.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null}
@@ -126,7 +134,7 @@ public class ConsultaInfoEquipo extends javax.swing.JFrame {
         txt_PartidosFuera.setText("Partidos fuera");
         jPanel1.add(txt_PartidosFuera, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 500, -1, -1));
 
-        jTable1.setBackground(new java.awt.Color(218, 166, 100));
+        jTable1.setFont(new java.awt.Font("NSimSun", 0, 18)); // NOI18N
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null},
@@ -166,7 +174,6 @@ public class ConsultaInfoEquipo extends javax.swing.JFrame {
         txt_PartidosTotales.setText("Partidos totales");
         jPanel1.add(txt_PartidosTotales, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 660, 270, -1));
 
-        jTable4.setBackground(new java.awt.Color(218, 166, 100));
         jTable4.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null}
@@ -202,14 +209,14 @@ public class ConsultaInfoEquipo extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 980, Short.MAX_VALUE)
-                .addContainerGap())
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 992, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 828, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 816, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         pack();

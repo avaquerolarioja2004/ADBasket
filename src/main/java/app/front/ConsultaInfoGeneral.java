@@ -1,16 +1,26 @@
 
 package app.front;
 
+import app.back.Libreria;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import javax.swing.table.DefaultTableModel;
+
 public class ConsultaInfoGeneral extends javax.swing.JFrame {
 
     public ConsultaInfoGeneral() {
+        this.setLocationRelativeTo(null);
+        this.setResizable(false);
         initComponents();
+        rellenarEquipos();
     }
 
     public void rellenarEquipos() {
-           
-            
+        
     }
+            
+    
     
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -20,7 +30,7 @@ public class ConsultaInfoGeneral extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         txt_ConsultarInfo = new javax.swing.JLabel();
         rbtn_General = new javax.swing.JRadioButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
+        tb_InfoGeneral = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         rbtn_Equipo = new javax.swing.JRadioButton();
         btn_Atras = new javax.swing.JButton();
@@ -45,7 +55,7 @@ public class ConsultaInfoGeneral extends javax.swing.JFrame {
         });
         jPanel1.add(rbtn_General, new org.netbeans.lib.awtextra.AbsoluteConstraints(647, 120, -1, -1));
 
-        jTable1.setBackground(new java.awt.Color(218, 166, 100));
+        jTable1.setFont(new java.awt.Font("NSimSun", 0, 18)); // NOI18N
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null, null},
@@ -79,9 +89,9 @@ public class ConsultaInfoGeneral extends javax.swing.JFrame {
                 return types [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(jTable1);
+        tb_InfoGeneral.setViewportView(jTable1);
 
-        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 230, 939, 360));
+        jPanel1.add(tb_InfoGeneral, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 230, 939, 360));
 
         gbtn_EG.add(rbtn_Equipo);
         rbtn_Equipo.setFont(new java.awt.Font("NSimSun", 1, 24)); // NOI18N
@@ -102,7 +112,7 @@ public class ConsultaInfoGeneral extends javax.swing.JFrame {
                 btn_AtrasActionPerformed(evt);
             }
         });
-        jPanel1.add(btn_Atras, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, -1, -1));
+        jPanel1.add(btn_Atras, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, -1, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -182,10 +192,10 @@ public class ConsultaInfoGeneral extends javax.swing.JFrame {
     private javax.swing.JButton btn_Atras;
     private javax.swing.ButtonGroup gbtn_EG;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     private javax.swing.JRadioButton rbtn_Equipo;
     private javax.swing.JRadioButton rbtn_General;
+    private javax.swing.JScrollPane tb_InfoGeneral;
     private javax.swing.JLabel txt_ConsultarInfo;
     // End of variables declaration//GEN-END:variables
 }

@@ -13,18 +13,15 @@ import java.util.logging.Logger;
 import javax.swing.JComboBox;
 import javax.swing.table.DefaultTableModel;
 
-/**
- *
- * @author elipu
- */
-public class EleccionPartido extends javax.swing.JFrame {
 
-    /**
-     * Creates new form EleccionPartido
-     */
+public class EleccionPartido extends javax.swing.JFrame {
+    
     public EleccionPartido() {
+        this.setLocationRelativeTo(null);
+        this.setResizable(false);
         initComponents();
-        rellenarPartidos(EleccionJornada.idJornada);
+        int idJornada1 = EleccionJornada.idJornada;
+        rellenarPartidos(idJornada1);
 
     }
 
@@ -32,7 +29,7 @@ public class EleccionPartido extends javax.swing.JFrame {
         limpiarTabla();
     
         try {
-            Connection c = Libreria.creaConexion("sqlite", "jdbc:sqlite:C:\\Users\\elipu\\OneDrive\\Escritorio\\AD_ServersYConectores\\SGBD\\sqlite\\BALONCESTO.db");
+            Connection c = Libreria.creaConexion("sqlite", "C:\\Users\\elipu\\OneDrive\\Escritorio\\AD_ServersYConectores\\SGBD\\sqlite\\BALONCESTO.db");
             if (c != null) {
                 ArrayList<String> partidos = app.back.Metodos.getPartidosJornada(idJornada, c);
                 DefaultTableModel model = (DefaultTableModel) tb_TablaPartidos.getModel();
@@ -88,7 +85,6 @@ public class EleccionPartido extends javax.swing.JFrame {
         txt_Partidos.setText("PARTIDOS");
 
         tb_TablaPartidos.setAutoCreateRowSorter(true);
-        tb_TablaPartidos.setBackground(new java.awt.Color(218, 166, 100));
         tb_TablaPartidos.setFont(new java.awt.Font("NSimSun", 0, 18)); // NOI18N
         tb_TablaPartidos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {

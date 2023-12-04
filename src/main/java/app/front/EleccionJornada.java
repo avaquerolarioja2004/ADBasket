@@ -14,6 +14,8 @@ public class EleccionJornada extends javax.swing.JFrame {
     public static int idJornada; 
     
     public EleccionJornada() throws SQLException {
+        this.setLocationRelativeTo(null);
+        this.setResizable(false);
         initComponents();
         img_Fondo.setIcon(new ImageIcon("./src/main/java/img/Img2.jpg"));
         rellenarJornadas();
@@ -96,7 +98,7 @@ public class EleccionJornada extends javax.swing.JFrame {
 
     private void btn_ConsultarInfoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_ConsultarInfoActionPerformed
         idJornada = cb_SeleccionJornada.getSelectedIndex()+1;
-        
+        //System.out.println("Id"+idJornada);
         EleccionPartido eleccionPartido = new EleccionPartido();
 
         eleccionPartido.setVisible(true);
