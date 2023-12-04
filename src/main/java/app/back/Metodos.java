@@ -211,6 +211,16 @@ public class Metodos {
         }
         return result;
     }
+    
+    public static ArrayList<String> getNombresEquipos(){
+        Query q=em.createNamedQuery("Equipo.findAll");
+        ArrayList<String> out=new ArrayList<>();
+        ArrayList<Equipo> resultados=(ArrayList<Equipo>) q.getResultList();
+        for (Equipo resultado : resultados) {
+            out.add(resultado.getNombre());
+        }
+        return out;
+    }
 
     public static String getNombreById(int id) {
         Query query = em.createNamedQuery("Equipo.findByIdequipo").setParameter("idequipo", id);
