@@ -190,7 +190,7 @@ public class Metodos {
     public static ArrayList<String> getClasificaciones(){
         //Falta que lo ordene por puntos
         ArrayList<String> out=new ArrayList<>();
-        Query q=em.createQuery("SELECT v FROM VClasifica v");
+        Query q=em.createQuery("SELECT v FROM VClasifica v ORDER BY v.ptos DESC");
         ArrayList<VClasifica> l=(ArrayList<VClasifica>) q.getResultList();
         for (VClasifica o : l) {
             out.add(o.getNombre()+";"+o.getPj()+";"+o.getPg()+";"+o.getPp()+";"+o.getPf()+";"+o.getPc()+";"+o.getPtos());
