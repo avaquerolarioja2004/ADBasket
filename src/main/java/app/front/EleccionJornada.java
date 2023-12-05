@@ -15,7 +15,7 @@ public class EleccionJornada extends javax.swing.JFrame {
     private JComboBox<String> comboBox;
     private EleccionPartido eleccionPartido;
     public static int idJornada;
-    private final String BBDD = "E:\\AD_ServersYConectores\\SGBD\\sqlite\\BALONCESTO.db";
+    private final String BBDD = "C:\\Users\\elipu\\OneDrive\\Escritorio\\AD_ServersYConectores\\SGBD\\sqlite\\BALONCESTO.db";
 
     public EleccionJornada() throws SQLException {
         this.setLocationRelativeTo(null);

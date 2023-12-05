@@ -20,7 +20,7 @@ public class EleccionPartido extends javax.swing.JFrame {
     private String equipoLocalSeleccionado;
     private String equipoVisitanteSeleccionado;
     private boolean partidoSeleccionado = false;
-    private final String BBDD="E:\\AD_ServersYConectores\\SGBD\\sqlite\\BALONCESTO.db";
+    private final String BBDD="C:\\Users\\elipu\\OneDrive\\Escritorio\\AD_ServersYConectores\\SGBD\\sqlite\\BALONCESTO.db";
     
     public EleccionPartido() {
         this.setLocationRelativeTo(null);

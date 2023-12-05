@@ -137,7 +137,9 @@ public class Metodos {
         criteriaQuery.where(predicate);
         List<VClasifica> resultados = em.createQuery(criteriaQuery).getResultList();
         VClasifica vs = resultados.get(0);
+        
         if (vs != null) {
+            em.refresh(vs);
             String resultado = vs.getNombre() + ";" + vs.getPj1() + ";" + vs.getPg1() + ";"
                     + vs.getPp1() + ";" + vs.getPf1() + ";" + vs.getPc1() + ";" + vs.getPtos1() + ";" + vs.getPj2() + ";" + vs.getPg2() + ";"
                     + vs.getPp2() + ";" + vs.getPf2() + ";" + vs.getPc2() + ";" + vs.getPtos2() + ";" + vs.getPj() + ";" + vs.getPg() + ";"
@@ -158,6 +160,7 @@ public class Metodos {
         List<VClasifica> resultados = em.createQuery(criteriaQuery).getResultList();
         VClasifica vs = resultados.get(0);
         if (vs != null) {
+            em.refresh(vs);
             String resultado = vs.getNombre() + ";" + vs.getPj1() + ";" + vs.getPg1() + ";"
                     + vs.getPp1() + ";" + vs.getPf1() + ";" + vs.getPc1() + ";" + vs.getPtos1() + ";" + vs.getPj2() + ";" + vs.getPg2() + ";"
                     + vs.getPp2() + ";" + vs.getPf2() + ";" + vs.getPc2() + ";" + vs.getPtos2() + ";" + vs.getPj() + ";" + vs.getPg() + ";"
@@ -178,6 +181,7 @@ public class Metodos {
         Query query = em.createQuery(JPQL).setParameter("idequipo", getEquipo(idEquipo));
         resultados = (ArrayList<Resultado>) query.getResultList();
         for (Resultado resultado : resultados) {
+            em.refresh(resultado);
             q = em.createQuery(fechaJornada).setParameter("idJornada", resultado.getNumJornada());
             j = (Jornada) q.getSingleResult();
             out.add(resultado.getNumJornada() + ";" + j.getFecha() + ";" + resultado.getEquipoLocal().getNombre() + ";" + resultado.getEquipoVisitante().getNombre()
@@ -191,7 +195,9 @@ public class Metodos {
         ArrayList<String> out = new ArrayList<>();
         Query q = em.createQuery("SELECT v FROM VClasifica v ORDER BY v.ptos DESC");
         ArrayList<VClasifica> l = (ArrayList<VClasifica>) q.getResultList();
+        
         for (VClasifica o : l) {
+            em.refresh(o);
             out.add(o.getNombre() + ";" + o.getPj() + ";" + o.getPg() + ";" + o.getPp() + ";" + o.getPf() + ";" + o.getPc() + ";" + o.getPtos());
         }
         return out;

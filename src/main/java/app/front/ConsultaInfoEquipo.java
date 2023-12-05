@@ -388,6 +388,7 @@ public class ConsultaInfoEquipo extends javax.swing.JFrame {
     private javax.swing.JLabel txt_PartidosEnCasa2;
     private javax.swing.JLabel txt_SeleccEquipo;
     // End of variables declaration//GEN-END:variables
+
 }
 
 
