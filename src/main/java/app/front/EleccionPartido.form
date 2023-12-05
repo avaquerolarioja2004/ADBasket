@@ -60,19 +60,19 @@
                               </Group>
                               <Component id="jScrollPane2" min="-2" pref="483" max="-2" attributes="0"/>
                               <Group type="102" alignment="0" attributes="0">
-                                  <Group type="103" groupAlignment="0" attributes="0">
-                                      <Group type="102" alignment="0" attributes="0">
-                                          <Component id="txt_ELocal" min="-2" max="-2" attributes="0"/>
-                                          <EmptySpace max="-2" attributes="0"/>
-                                          <Component id="txt_NomELocal" min="-2" pref="116" max="-2" attributes="0"/>
-                                      </Group>
+                                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
                                       <Group type="102" alignment="0" attributes="0">
                                           <Component id="txt_EVisitante" min="-2" max="-2" attributes="0"/>
                                           <EmptySpace max="-2" attributes="0"/>
-                                          <Component id="txt_NomEVisitante" min="-2" pref="116" max="-2" attributes="0"/>
+                                          <Component id="txt_NomEVisitante" max="32767" attributes="0"/>
+                                      </Group>
+                                      <Group type="102" alignment="0" attributes="0">
+                                          <Component id="txt_ELocal" min="-2" max="-2" attributes="0"/>
+                                          <EmptySpace max="-2" attributes="0"/>
+                                          <Component id="txt_NomELocal" min="-2" pref="152" max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
-                                  <EmptySpace min="-2" pref="54" max="-2" attributes="0"/>
+                                  <EmptySpace type="separate" max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="0" attributes="0">
                                       <Group type="102" attributes="0">
                                           <Component id="txt_PtosEVisitante" min="-2" max="-2" attributes="0"/>
@@ -116,11 +116,13 @@
                       <Component id="txt_NomELocal" alignment="3" pref="32" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="txt_EVisitante" alignment="3" min="-2" pref="32" max="-2" attributes="0"/>
-                      <Component id="txt_PtosEVisitante" alignment="3" min="-2" pref="32" max="-2" attributes="0"/>
-                      <Component id="PuntosVisitante" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="txt_NomEVisitante" alignment="3" pref="32" max="32767" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Component id="PuntosVisitante" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="txt_EVisitante" alignment="3" min="-2" pref="32" max="-2" attributes="0"/>
+                          <Component id="txt_PtosEVisitante" alignment="3" min="-2" pref="32" max="-2" attributes="0"/>
+                          <Component id="txt_NomEVisitante" alignment="3" pref="32" max="32767" attributes="0"/>
+                      </Group>
                   </Group>
                   <EmptySpace min="-2" pref="58" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
@@ -169,7 +171,7 @@
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="NSimSun" size="24" style="1"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="E.L. -&gt;"/>
+            <Property name="text" type="java.lang.String" value="E.L.-&gt;"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="txt_EVisitante">
@@ -177,7 +179,7 @@
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="NSimSun" size="24" style="1"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="E.V. -&gt;"/>
+            <Property name="text" type="java.lang.String" value="E.V.-&gt;"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="txt_NomELocal">

@@ -1,79 +1,143 @@
 
 package app.front;
 
+import app.back.Metodos;
 import java.util.ArrayList;
+import javax.swing.table.DefaultTableModel;
 
 public class ConsultaInfoEquipo extends javax.swing.JFrame {
-    
+
     public String nombreEquipo;
-    public int idEquipo = app.back.Metodos.getIdEquipoByName(nombreEquipo);
-    
+    public int idEquipo;
+
     public ConsultaInfoEquipo() {
         this.setLocationRelativeTo(null);
         this.setResizable(false);
         initComponents();
+        tb_InfoEquipo.setDefaultEditor(Object.class, null);
+        cb_SeleccEquipo.setEditable(false);
         rellenarEquipos();
     }
 
-    public void rellenarEquipos() { 
+    public void rellenarEquipos() {
         ArrayList<String> equipos = app.back.Metodos.getNombresEquipos();
-        for(String item : equipos){
+        for (String item : equipos) {
             this.cb_SeleccEquipo.addItem(item);
-        }             
+        }
+    }
+
+    public void rellenarTablaEquipos(int idEquipo) {        
+        DefaultTableModel model = (DefaultTableModel) tb_InfoEquipo.getModel();
+        model.setRowCount(0); // Limpia la tabla antes de rellenarla
+
+        // Obtener resultados del equipo seleccionado
+        ArrayList<String> resultados = Metodos.getResultadosEquipo(idEquipo);
+
+        // Iterar sobre los resultados y agregar filas a la tabla
+        for (String resultado : resultados) {
+            String[] datos = resultado.split(";");
+            model.addRow(datos);
+        }
     }
     
-    public void rellenarTabla(int idEquipo){
-        
+    public void rellenarTablaPtosCasa(int idEquipo) {
+        DefaultTableModel modelPuntos = (DefaultTableModel) tb_PtosEnCasa.getModel();
+        modelPuntos.setRowCount(0); // Limpia la tabla antes de rellenarla
+
+        // Obtener resultados del equipo seleccionado
+        String resultados = Metodos.getInfoEquipo(idEquipo);
+
+        if (!resultados.isEmpty()) {
+            String[] datos = resultados.split(";");
+
+            // Asegurarse de que hay suficientes datos para rellenar la tabla
+            if (datos.length >= 18) {
+                Object[] filaPuntos = new Object[6];
+                for (int i = 1; i < 7; i++) { // Comienza desde 1 para ignorar el nombre del equipo
+                    filaPuntos[i - 1] = datos[i];
+                }
+
+                modelPuntos.addRow(filaPuntos);
+            }
+        }
     }
     
+    public void rellenarTablaPtosFuera(int idEquipo) {
+        DefaultTableModel modelPuntos = (DefaultTableModel) tb_PtosFuera.getModel();
+        modelPuntos.setRowCount(0); // Limpia la tabla antes de rellenarla
+
+        // Obtener resultados del equipo seleccionado
+        String resultados = Metodos.getInfoEquipo(idEquipo);
+
+        if (!resultados.isEmpty()) {
+            String[] datos = resultados.split(";");
+
+            // Asegurarse de que hay suficientes datos para rellenar la tabla
+            if (datos.length >= 18) {
+                Object[] filaPuntos = new Object[6]; // Cambié la longitud a 6 para las columnas de puntos fuera
+                for (int i = 7, j = 0; i < 13; i++, j++) {
+                    filaPuntos[j] = datos[i];
+                }
+
+                modelPuntos.addRow(filaPuntos);
+            }
+        }
+    }
+    
+    public void rellenarTablaPtosTotales(int idEquipo) {
+        DefaultTableModel modelPuntos = (DefaultTableModel) tb_PtosTotales.getModel();
+        modelPuntos.setRowCount(0); // Limpia la tabla antes de rellenarla
+
+        // Obtener resultados del equipo seleccionado
+        String resultados = Metodos.getInfoEquipo(idEquipo);
+
+        if (!resultados.isEmpty()) {
+            String[] datos = resultados.split(";");
+
+            // Asegurarse de que hay suficientes datos para rellenar la tabla
+            if (datos.length >= 18) { // Ajusté la condición a 19 para tener en cuenta el índice 18
+                Object[] filaPuntos = new Object[18]; // Cambié la longitud a 6 para las columnas de puntos totales
+                for (int i = 13, j = 0; i < 18; i++, j++) { // Ajusté los índices para obtener los puntos totales
+                    filaPuntos[j] = datos[i];
+                }
+
+                modelPuntos.addRow(filaPuntos);
+            }
+        }
+    }
+    
+
+
+    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
         gbtn_EG = new javax.swing.ButtonGroup();
         jPanel1 = new javax.swing.JPanel();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
         txt_SeleccEquipo = new javax.swing.JLabel();
         cb_SeleccEquipo = new javax.swing.JComboBox<>();
         txt_ConsultarInfo = new javax.swing.JLabel();
         txt_PartidosEnCasa = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
-        jTable3 = new javax.swing.JTable();
+        tb_PtosFuera = new javax.swing.JTable();
         rbtn_General = new javax.swing.JRadioButton();
-        txt_PartidosFuera = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tb_InfoEquipo = new javax.swing.JTable();
         rbtn_Equipo = new javax.swing.JRadioButton();
-        txt_PartidosTotales = new javax.swing.JLabel();
-        jScrollPane4 = new javax.swing.JScrollPane();
-        jTable4 = new javax.swing.JTable();
         btn_Atras = new javax.swing.JButton();
+        txt_PartidosEnCasa1 = new javax.swing.JLabel();
+        jScrollPane5 = new javax.swing.JScrollPane();
+        tb_PtosEnCasa = new javax.swing.JTable();
+        txt_PartidosEnCasa2 = new javax.swing.JLabel();
+        jScrollPane6 = new javax.swing.JScrollPane();
+        tb_PtosTotales = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jPanel1.setBackground(new java.awt.Color(243, 209, 165));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null, null, null}
-            },
-            new String [] {
-                "P.J.", "P.G.", "P.P.", "P.F.", "P.C.", "Ptos."
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-        });
-        jScrollPane2.setViewportView(jTable2);
-
-        jPanel1.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 700, -1, 50));
 
         txt_SeleccEquipo.setFont(new java.awt.Font("NSimSun", 1, 30)); // NOI18N
         txt_SeleccEquipo.setText("Selecciona un equipo");
@@ -96,11 +160,11 @@ public class ConsultaInfoEquipo extends javax.swing.JFrame {
         jPanel1.add(txt_ConsultarInfo, new org.netbeans.lib.awtextra.AbsoluteConstraints(261, 43, -1, 37));
 
         txt_PartidosEnCasa.setFont(new java.awt.Font("NSimSun", 1, 30)); // NOI18N
-        txt_PartidosEnCasa.setText("Partidos en casa");
+        txt_PartidosEnCasa.setText("Partidos fuera");
         txt_PartidosEnCasa.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jPanel1.add(txt_PartidosEnCasa, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 500, -1, -1));
+        jPanel1.add(txt_PartidosEnCasa, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 440, -1, -1));
 
-        jTable3.setModel(new javax.swing.table.DefaultTableModel(
+        tb_PtosFuera.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null}
             },
@@ -116,9 +180,9 @@ public class ConsultaInfoEquipo extends javax.swing.JFrame {
                 return types [columnIndex];
             }
         });
-        jScrollPane3.setViewportView(jTable3);
+        jScrollPane3.setViewportView(tb_PtosFuera);
 
-        jPanel1.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 540, -1, 50));
+        jPanel1.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 480, -1, 50));
 
         gbtn_EG.add(rbtn_General);
         rbtn_General.setFont(new java.awt.Font("NSimSun", 1, 24)); // NOI18N
@@ -130,14 +194,9 @@ public class ConsultaInfoEquipo extends javax.swing.JFrame {
         });
         jPanel1.add(rbtn_General, new org.netbeans.lib.awtextra.AbsoluteConstraints(647, 120, -1, -1));
 
-        txt_PartidosFuera.setFont(new java.awt.Font("NSimSun", 1, 30)); // NOI18N
-        txt_PartidosFuera.setText("Partidos fuera");
-        jPanel1.add(txt_PartidosFuera, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 500, -1, -1));
-
-        jTable1.setFont(new java.awt.Font("NSimSun", 0, 18)); // NOI18N
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tb_InfoEquipo.setFont(new java.awt.Font("NSimSun", 0, 18)); // NOI18N
+        tb_InfoEquipo.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null},
                 {null, null, null, null, null, null},
                 {null, null, null, null, null, null},
                 {null, null, null, null, null, null},
@@ -160,9 +219,9 @@ public class ConsultaInfoEquipo extends javax.swing.JFrame {
                 return types [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tb_InfoEquipo);
 
-        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 230, 939, 230));
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 230, 939, 170));
 
         gbtn_EG.add(rbtn_Equipo);
         rbtn_Equipo.setFont(new java.awt.Font("NSimSun", 1, 24)); // NOI18N
@@ -170,11 +229,23 @@ public class ConsultaInfoEquipo extends javax.swing.JFrame {
         rbtn_Equipo.setText("Equipo");
         jPanel1.add(rbtn_Equipo, new org.netbeans.lib.awtextra.AbsoluteConstraints(181, 120, -1, -1));
 
-        txt_PartidosTotales.setFont(new java.awt.Font("NSimSun", 1, 30)); // NOI18N
-        txt_PartidosTotales.setText("Partidos totales");
-        jPanel1.add(txt_PartidosTotales, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 660, 270, -1));
+        btn_Atras.setBackground(new java.awt.Color(218, 166, 100));
+        btn_Atras.setFont(new java.awt.Font("NSimSun", 1, 20)); // NOI18N
+        btn_Atras.setText("Atrás");
+        btn_Atras.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
+        btn_Atras.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_AtrasActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btn_Atras, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, -1, -1));
 
-        jTable4.setModel(new javax.swing.table.DefaultTableModel(
+        txt_PartidosEnCasa1.setFont(new java.awt.Font("NSimSun", 1, 30)); // NOI18N
+        txt_PartidosEnCasa1.setText("Resultados totales");
+        txt_PartidosEnCasa1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jPanel1.add(txt_PartidosEnCasa1, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 570, -1, -1));
+
+        tb_PtosEnCasa.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null}
             },
@@ -190,20 +261,34 @@ public class ConsultaInfoEquipo extends javax.swing.JFrame {
                 return types [columnIndex];
             }
         });
-        jScrollPane4.setViewportView(jTable4);
+        jScrollPane5.setViewportView(tb_PtosEnCasa);
 
-        jPanel1.add(jScrollPane4, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 540, -1, 50));
+        jPanel1.add(jScrollPane5, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 480, -1, 50));
 
-        btn_Atras.setBackground(new java.awt.Color(218, 166, 100));
-        btn_Atras.setFont(new java.awt.Font("NSimSun", 1, 20)); // NOI18N
-        btn_Atras.setText("Atrás");
-        btn_Atras.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
-        btn_Atras.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_AtrasActionPerformed(evt);
+        txt_PartidosEnCasa2.setFont(new java.awt.Font("NSimSun", 1, 30)); // NOI18N
+        txt_PartidosEnCasa2.setText("Partidos en casa");
+        txt_PartidosEnCasa2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jPanel1.add(txt_PartidosEnCasa2, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 440, -1, -1));
+
+        tb_PtosTotales.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null, null}
+            },
+            new String [] {
+                "P.J.", "P.G.", "P.P.", "P.F.", "P.C.", "Ptos."
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
             }
         });
-        jPanel1.add(btn_Atras, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, -1, -1));
+        jScrollPane6.setViewportView(tb_PtosTotales);
+
+        jPanel1.add(jScrollPane6, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 610, -1, 50));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -213,10 +298,7 @@ public class ConsultaInfoEquipo extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 816, Short.MAX_VALUE)
-                .addContainerGap())
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 710, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
@@ -242,6 +324,12 @@ public class ConsultaInfoEquipo extends javax.swing.JFrame {
 
     private void cb_SeleccEquipoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cb_SeleccEquipoActionPerformed
         // TODO add your handling code here:
+        nombreEquipo = (String) cb_SeleccEquipo.getSelectedItem();
+        idEquipo = Metodos.getIdEquipoByName(nombreEquipo);
+        rellenarTablaEquipos(idEquipo);
+        rellenarTablaPtosCasa(idEquipo);
+        rellenarTablaPtosFuera(idEquipo);
+        rellenarTablaPtosTotales(idEquipo);
     }//GEN-LAST:event_cb_SeleccEquipoActionPerformed
 
     /**
@@ -278,6 +366,8 @@ public class ConsultaInfoEquipo extends javax.swing.JFrame {
             }
         });
     }
+    
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_Atras;
@@ -285,19 +375,21 @@ public class ConsultaInfoEquipo extends javax.swing.JFrame {
     private javax.swing.ButtonGroup gbtn_EG;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JScrollPane jScrollPane4;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTable jTable2;
-    private javax.swing.JTable jTable3;
-    private javax.swing.JTable jTable4;
+    private javax.swing.JScrollPane jScrollPane5;
+    private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JRadioButton rbtn_Equipo;
     private javax.swing.JRadioButton rbtn_General;
+    private javax.swing.JTable tb_InfoEquipo;
+    private javax.swing.JTable tb_PtosEnCasa;
+    private javax.swing.JTable tb_PtosFuera;
+    private javax.swing.JTable tb_PtosTotales;
     private javax.swing.JLabel txt_ConsultarInfo;
     private javax.swing.JLabel txt_PartidosEnCasa;
-    private javax.swing.JLabel txt_PartidosFuera;
-    private javax.swing.JLabel txt_PartidosTotales;
+    private javax.swing.JLabel txt_PartidosEnCasa1;
+    private javax.swing.JLabel txt_PartidosEnCasa2;
     private javax.swing.JLabel txt_SeleccEquipo;
     // End of variables declaration//GEN-END:variables
 }
+
+

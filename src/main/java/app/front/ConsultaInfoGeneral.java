@@ -1,9 +1,6 @@
 
 package app.front;
 
-import app.back.Libreria;
-import java.sql.Connection;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;
 
@@ -13,11 +10,19 @@ public class ConsultaInfoGeneral extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
         this.setResizable(false);
         initComponents();
-        rellenarEquipos();
-    }
+        tb_InfoGeneral.setDefaultEditor(Object.class, null);
+rellenarTablaGeneral();    }
 
-    public void rellenarEquipos() {
+
+    public void rellenarTablaGeneral() {
+        ArrayList<String> clasificaciones = app.back.Metodos.getClasificaciones();
         
+        DefaultTableModel model = (DefaultTableModel) tb_InfoGeneral.getModel();
+        model.setRowCount(0); // Clear the table before filling it
+        for (String clasificacion : clasificaciones) {
+            String[] datos = clasificacion.split(";");
+            model.addRow(datos);
+        }
     }
             
     
@@ -30,8 +35,8 @@ public class ConsultaInfoGeneral extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         txt_ConsultarInfo = new javax.swing.JLabel();
         rbtn_General = new javax.swing.JRadioButton();
-        tb_InfoGeneral = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tabla = new javax.swing.JScrollPane();
+        tb_InfoGeneral = new javax.swing.JTable();
         rbtn_Equipo = new javax.swing.JRadioButton();
         btn_Atras = new javax.swing.JButton();
 
@@ -55,8 +60,8 @@ public class ConsultaInfoGeneral extends javax.swing.JFrame {
         });
         jPanel1.add(rbtn_General, new org.netbeans.lib.awtextra.AbsoluteConstraints(647, 120, -1, -1));
 
-        jTable1.setFont(new java.awt.Font("NSimSun", 0, 18)); // NOI18N
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tb_InfoGeneral.setFont(new java.awt.Font("NSimSun", 0, 18)); // NOI18N
+        tb_InfoGeneral.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null, null},
                 {null, null, null, null, null, null, null},
@@ -89,9 +94,9 @@ public class ConsultaInfoGeneral extends javax.swing.JFrame {
                 return types [columnIndex];
             }
         });
-        tb_InfoGeneral.setViewportView(jTable1);
+        tabla.setViewportView(tb_InfoGeneral);
 
-        jPanel1.add(tb_InfoGeneral, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 230, 939, 360));
+        jPanel1.add(tabla, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 230, 939, 360));
 
         gbtn_EG.add(rbtn_Equipo);
         rbtn_Equipo.setFont(new java.awt.Font("NSimSun", 1, 24)); // NOI18N
@@ -192,10 +197,10 @@ public class ConsultaInfoGeneral extends javax.swing.JFrame {
     private javax.swing.JButton btn_Atras;
     private javax.swing.ButtonGroup gbtn_EG;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JRadioButton rbtn_Equipo;
     private javax.swing.JRadioButton rbtn_General;
-    private javax.swing.JScrollPane tb_InfoGeneral;
+    private javax.swing.JScrollPane tabla;
+    private javax.swing.JTable tb_InfoGeneral;
     private javax.swing.JLabel txt_ConsultarInfo;
     // End of variables declaration//GEN-END:variables
 }

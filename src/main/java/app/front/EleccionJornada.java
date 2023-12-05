@@ -6,6 +6,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
+import javax.swing.JOptionPane;
 
 public class EleccionJornada extends javax.swing.JFrame {
 
@@ -59,7 +60,7 @@ public class EleccionJornada extends javax.swing.JFrame {
                 cb_SeleccionJornadaActionPerformed(evt);
             }
         });
-        jPanel1.add(cb_SeleccionJornada, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 170, 240, 40));
+        jPanel1.add(cb_SeleccionJornada, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 170, 280, 40));
 
         btn_ConsultarInfo.setBackground(new java.awt.Color(218, 166, 100));
         btn_ConsultarInfo.setFont(new java.awt.Font("NSimSun", 1, 22)); // NOI18N
@@ -97,13 +98,17 @@ public class EleccionJornada extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_ConsultarInfoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_ConsultarInfoActionPerformed
-        idJornada = cb_SeleccionJornada.getSelectedIndex()+1;
-        //System.out.println("Id"+idJornada);
-        EleccionPartido eleccionPartido = new EleccionPartido();
+         idJornada = cb_SeleccionJornada.getSelectedIndex() + 1;
 
-        eleccionPartido.setVisible(true);
-        
-        this.dispose();
+        // Verificar si la jornada está dentro del rango permitido (1 a 7)
+        if (idJornada >= 1 && idJornada <= 7) {
+            JOptionPane.showMessageDialog(this, "La jornada que ha saleccionado ha terminado, porfavor seleccione una jornada más reciente.", "Jornada Inválida", JOptionPane.WARNING_MESSAGE);
+        } else {
+            EleccionPartido eleccionPartido = new EleccionPartido();
+            eleccionPartido.setVisible(true);
+            this.dispose();
+            
+        }
     }//GEN-LAST:event_btn_ConsultarInfoActionPerformed
 
     private void cb_SeleccionJornadaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cb_SeleccionJornadaActionPerformed
