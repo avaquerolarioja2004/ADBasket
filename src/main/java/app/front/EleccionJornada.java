@@ -26,10 +26,11 @@ public class EleccionJornada extends javax.swing.JFrame {
     public void rellenarJornadas() {
         ArrayList<String> jornadas = app.back.Metodos.getJornadas();
         for(String item : jornadas){
-            this.cb_SeleccionJornada.addItem("Jornada "+item);
+          // Reemplazar ; con :
+          String nuevoItem = "Jornada " + item.replace(";", ":");
+          this.cb_SeleccionJornada.addItem(nuevoItem);
         }      
-            
-    }
+  }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents

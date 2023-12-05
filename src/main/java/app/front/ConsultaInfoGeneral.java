@@ -11,7 +11,8 @@ public class ConsultaInfoGeneral extends javax.swing.JFrame {
         this.setResizable(false);
         initComponents();
         tb_InfoGeneral.setDefaultEditor(Object.class, null);
-rellenarTablaGeneral();    }
+        rellenarTablaGeneral();   
+    }
 
 
     public void rellenarTablaGeneral() {

@@ -14,7 +14,11 @@ public class ConsultaInfoEquipo extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
         this.setResizable(false);
         initComponents();
+        // Bloquear la edición en las tablas
         tb_InfoEquipo.setDefaultEditor(Object.class, null);
+        tb_PtosEnCasa.setDefaultEditor(Object.class, null);
+        tb_PtosFuera.setDefaultEditor(Object.class, null);
+        tb_PtosTotales.setDefaultEditor(Object.class, null);
         cb_SeleccEquipo.setEditable(false);
         rellenarEquipos();
     }
@@ -28,12 +32,10 @@ public class ConsultaInfoEquipo extends javax.swing.JFrame {
 
     public void rellenarTablaEquipos(int idEquipo) {        
         DefaultTableModel model = (DefaultTableModel) tb_InfoEquipo.getModel();
-        model.setRowCount(0); // Limpia la tabla antes de rellenarla
-
-        // Obtener resultados del equipo seleccionado
+        model.setRowCount(0); 
+        
         ArrayList<String> resultados = Metodos.getResultadosEquipo(idEquipo);
 
-        // Iterar sobre los resultados y agregar filas a la tabla
         for (String resultado : resultados) {
             String[] datos = resultado.split(";");
             model.addRow(datos);
@@ -42,18 +44,15 @@ public class ConsultaInfoEquipo extends javax.swing.JFrame {
     
     public void rellenarTablaPtosCasa(int idEquipo) {
         DefaultTableModel modelPuntos = (DefaultTableModel) tb_PtosEnCasa.getModel();
-        modelPuntos.setRowCount(0); // Limpia la tabla antes de rellenarla
-
-        // Obtener resultados del equipo seleccionado
+        modelPuntos.setRowCount(0);
         String resultados = Metodos.getInfoEquipo(idEquipo);
 
         if (!resultados.isEmpty()) {
             String[] datos = resultados.split(";");
 
-            // Asegurarse de que hay suficientes datos para rellenar la tabla
             if (datos.length >= 18) {
                 Object[] filaPuntos = new Object[6];
-                for (int i = 1; i < 7; i++) { // Comienza desde 1 para ignorar el nombre del equipo
+                for (int i = 1; i < 7; i++) {
                     filaPuntos[i - 1] = datos[i];
                 }
 
@@ -64,17 +63,15 @@ public class ConsultaInfoEquipo extends javax.swing.JFrame {
     
     public void rellenarTablaPtosFuera(int idEquipo) {
         DefaultTableModel modelPuntos = (DefaultTableModel) tb_PtosFuera.getModel();
-        modelPuntos.setRowCount(0); // Limpia la tabla antes de rellenarla
+        modelPuntos.setRowCount(0); 
 
-        // Obtener resultados del equipo seleccionado
         String resultados = Metodos.getInfoEquipo(idEquipo);
 
         if (!resultados.isEmpty()) {
             String[] datos = resultados.split(";");
 
-            // Asegurarse de que hay suficientes datos para rellenar la tabla
             if (datos.length >= 18) {
-                Object[] filaPuntos = new Object[6]; // Cambié la longitud a 6 para las columnas de puntos fuera
+                Object[] filaPuntos = new Object[6]; 
                 for (int i = 7, j = 0; i < 13; i++, j++) {
                     filaPuntos[j] = datos[i];
                 }
@@ -84,30 +81,25 @@ public class ConsultaInfoEquipo extends javax.swing.JFrame {
         }
     }
     
-    public void rellenarTablaPtosTotales(int idEquipo) {
-        DefaultTableModel modelPuntos = (DefaultTableModel) tb_PtosTotales.getModel();
-        modelPuntos.setRowCount(0); // Limpia la tabla antes de rellenarla
+   public void rellenarTablaPtosTotales(int idEquipo) {
+    DefaultTableModel modelPuntos = (DefaultTableModel) tb_PtosTotales.getModel();
+    modelPuntos.setRowCount(0); 
 
-        // Obtener resultados del equipo seleccionado
-        String resultados = Metodos.getInfoEquipo(idEquipo);
+    String resultados = Metodos.getInfoEquipo(idEquipo);
 
-        if (!resultados.isEmpty()) {
-            String[] datos = resultados.split(";");
+    if (!resultados.isEmpty()) {
+        String[] datos = resultados.split(";");
 
-            // Asegurarse de que hay suficientes datos para rellenar la tabla
-            if (datos.length >= 18) { // Ajusté la condición a 19 para tener en cuenta el índice 18
-                Object[] filaPuntos = new Object[18]; // Cambié la longitud a 6 para las columnas de puntos totales
-                for (int i = 13, j = 0; i < 18; i++, j++) { // Ajusté los índices para obtener los puntos totales
-                    filaPuntos[j] = datos[i];
-                }
-
-                modelPuntos.addRow(filaPuntos);
+        if (datos.length >= 19) {
+            Object[] filaPuntos = new Object[6]; 
+            for (int i = 13, j = 0; i < 19; i++, j++) { 
+                filaPuntos[j] = datos[i];
             }
+
+            modelPuntos.addRow(filaPuntos);
         }
     }
-    
-
-
+}
     
 
     @SuppressWarnings("unchecked")
@@ -205,10 +197,16 @@ public class ConsultaInfoEquipo extends javax.swing.JFrame {
                 {null, null, null, null, null, null},
                 {null, null, null, null, null, null},
                 {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
                 {null, null, null, null, null, null}
             },
             new String [] {
-                "Equipo", "Fecha", "Local", "Visitante", "Ptos. Local", "Ptos. Visitante"
+                "Jornada", "Fecha", "Local", "Visitante", "Ptos. Local", "Ptos. Visitante"
             }
         ) {
             Class[] types = new Class [] {

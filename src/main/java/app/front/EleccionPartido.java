@@ -1,13 +1,7 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package app.front;
 
 import app.back.Libreria;
 import app.back.Metodos;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -35,50 +29,19 @@ public class EleccionPartido extends javax.swing.JFrame {
         tb_TablaPartidos.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
             @Override
             public void valueChanged(ListSelectionEvent e) {
-                if (!e.getValueIsAdjusting()) {
-                    // Obtener los nombres de los equipos de la fila seleccionada
+                if (!e.getValueIsAdjusting() && tb_TablaPartidos.getSelectedRow() != -1) {
                     int selectedRow = tb_TablaPartidos.getSelectedRow();
-                    equipoLocalSeleccionado = tb_TablaPartidos.getValueAt(selectedRow, 0).toString();
-                    equipoVisitanteSeleccionado = tb_TablaPartidos.getValueAt(selectedRow, 1).toString();
 
-                    // Actualizar las etiquetas con los nombres de los equipos seleccionados
-                    txt_NomELocal.setText(equipoLocalSeleccionado);
-                    txt_NomEVisitante.setText(equipoVisitanteSeleccionado);
+                    if (selectedRow >= 0 && selectedRow < tb_TablaPartidos.getRowCount()) {
+                        equipoLocalSeleccionado = tb_TablaPartidos.getValueAt(selectedRow, 0).toString();
+                        equipoVisitanteSeleccionado = tb_TablaPartidos.getValueAt(selectedRow, 1).toString();
+
+                        txt_NomELocal.setText(equipoLocalSeleccionado);
+                        txt_NomEVisitante.setText(equipoVisitanteSeleccionado);
+                    }
                 }
             }
         });
-        
-//        PuntosLocal.addKeyListener(new KeyAdapter() {
-//            @Override
-//            public void keyTyped(KeyEvent e) {
-//                char c = e.getKeyChar();
-//                if (!Character.isDigit(c) && c != '-') {
-//                    e.consume();
-//                }
-//
-//                // Allow '-' only at the beginning
-//                if (c == '-' && PuntosLocal.getCaretPosition() > 0) {
-//                    e.consume();
-//                }
-//            }
-//        });
-//
-//        PuntosVisitante.addKeyListener(new KeyAdapter() {
-//            @Override
-//            public void keyTyped(KeyEvent e) {
-//                char c = e.getKeyChar();
-//                if (!Character.isDigit(c) && c != '-') {
-//                    e.consume();
-//                }
-//
-//                // Allow '-' only at the beginning
-//                if (c == '-' && PuntosVisitante.getCaretPosition() > 0) {
-//                    e.consume();
-//                }
-//            }
-//        });
-//
-//    }
     }
     public void rellenarPartidos(int idJornada){
         limpiarTabla();
@@ -97,7 +60,6 @@ public class EleccionPartido extends javax.swing.JFrame {
                 System.out.println("Error al establecer la conexion a la base de datos.");
             }
         } catch (SQLException e) {
-            // Handle SQLException
             e.printStackTrace();
         }
     }
@@ -109,26 +71,8 @@ public class EleccionPartido extends javax.swing.JFrame {
     
     public JComboBox<String> getComboBox() {
     return getComboBox();
-    }
+    } 
     
-    private boolean validacionPuntos() {
-        try {
-            if (PuntosLocal.getText().isEmpty() || PuntosVisitante.getText().isEmpty()) {
-                return true;
-            }
-            
-            int pEL = Integer.parseInt(PuntosLocal.getText());
-            int pEV = Integer.parseInt(PuntosVisitante.getText());
-            
-            if (pEL == pEV || pEL < 0 || pEV < 0) {
-                return true;
-            }
-
-            return false;
-        } catch (NumberFormatException e) {
-            return true;
-        }
-    }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -345,31 +289,53 @@ public class EleccionPartido extends javax.swing.JFrame {
 
     private void btn_GrabarResultadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_GrabarResultadoActionPerformed
         // TODO add your handling code here:
-        if (validacionPuntos()) {
-            JOptionPane.showMessageDialog(this, "Compruebe los campos de puntuaje. \n"
-                    + "-No ha compleato correctamente los campos.\n"
-                    + "-No está permitido el empate.\n"
-                    + "-No está permitido introducir valores negativos.", "Error", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-        
-        // Resto del código para grabar el resultado
-        int jornada = EleccionJornada.idJornada; 
+        int jornada = EleccionJornada.idJornada;
         int idEL = app.back.Metodos.getIdEquipoByName(equipoLocalSeleccionado);
         int idEV = app.back.Metodos.getIdEquipoByName(equipoVisitanteSeleccionado);
+
+        String puntosLocalText = PuntosLocal.getText();
+        String puntosVisitanteText = PuntosVisitante.getText();
+        if (puntosLocalText.isEmpty() || puntosVisitanteText.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Compruebe los campos de puntuaje: \n"
+                    + "-No está permitido dejar estos campos en blanco", "Error", JOptionPane.ERROR_MESSAGE);
+            return; 
+        }
         int pEL = Integer.parseInt(PuntosLocal.getText());
         int pEV = Integer.parseInt(PuntosVisitante.getText());
-
-        // Llamar al método grabar
-        boolean resultadoGrabacion = Metodos.grabar(jornada, idEL, pEL, idEV, pEV);
-
-        // Mostrar mensaje según el resultado de la grabación
-        if (resultadoGrabacion) {
-            JOptionPane.showMessageDialog(this, "Resultado grabado correctamente", "Éxito", JOptionPane.INFORMATION_MESSAGE);
-        } else {
-            JOptionPane.showMessageDialog(this, "Error al grabar el resultado", "Error", JOptionPane.ERROR_MESSAGE);
-        }   
         
+        try {
+            pEL = Integer.parseInt(puntosLocalText);
+            pEV = Integer.parseInt(puntosVisitanteText);
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Compruebe los campos de puntuaje: \n"
+                    + "-Asegúrese de ingresar valores numéricos válidos", "Error", JOptionPane.ERROR_MESSAGE);
+            return;        
+        }
+        if (pEL == pEV) {
+            JOptionPane.showMessageDialog(this, "Compruebe los campos de puntuaje: \n"
+                    + "-No están permitidos los empates.", "Error", JOptionPane.ERROR_MESSAGE);
+        } else if (pEL < 0 || pEV < 0) {
+            JOptionPane.showMessageDialog(this, "Compruebe los campos de puntuaje: \n"
+                    + "-No están permitidos los valores negativos.", "Error", JOptionPane.ERROR_MESSAGE);
+        } else {
+            boolean resultadoGrabacion = Metodos.grabar(jornada, idEL, pEL, idEV, pEV);
+
+            if (resultadoGrabacion) {
+                JOptionPane.showMessageDialog(this, "Resultado grabado correctamente", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+                int rowCount = tb_TablaPartidos.getRowCount();
+                int selectedRow = tb_TablaPartidos.getSelectedRow();
+                if (selectedRow != -1 && selectedRow < rowCount) {
+                    DefaultTableModel model = (DefaultTableModel) tb_TablaPartidos.getModel();
+                    model.removeRow(selectedRow);
+                }
+                PuntosLocal.setText("");
+                PuntosVisitante.setText("");
+                txt_NomELocal.setText("");
+                txt_NomEVisitante.setText("");
+            } else {
+                JOptionPane.showMessageDialog(this, "Error al grabar el resultado", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        }
     }//GEN-LAST:event_btn_GrabarResultadoActionPerformed
 
     private void PuntosLocalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PuntosLocalActionPerformed

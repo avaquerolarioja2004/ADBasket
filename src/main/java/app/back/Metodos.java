@@ -13,7 +13,6 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
 import jakarta.persistence.Query;
-import jakarta.persistence.TypedQuery;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Predicate;
@@ -24,8 +23,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -100,7 +97,7 @@ public class Metodos {
         // JPQL
         try {
             int idResultado = getFinalId();
-            if (idResultado==-1) {
+            if (idResultado == -1) {
                 System.err.println("Error en el id del resultado");
                 return false;
             }
@@ -120,6 +117,8 @@ public class Metodos {
             em.persist(resultado);
             em.remove(partido);
             em.getTransaction().commit();
+            updateEquipo(idEL, true, pEL, pEV);
+            updateEquipo(idEV, false, pEL, pEV);
             return true;
         } catch (Exception e) {
             System.err.println("Error en la petición");
@@ -141,7 +140,7 @@ public class Metodos {
         if (vs != null) {
             String resultado = vs.getNombre() + ";" + vs.getPj1() + ";" + vs.getPg1() + ";"
                     + vs.getPp1() + ";" + vs.getPf1() + ";" + vs.getPc1() + ";" + vs.getPtos1() + ";" + vs.getPj2() + ";" + vs.getPg2() + ";"
-                    + vs.getPp2() + ";" + vs.getPf2() + ";" + vs.getPc2() + ";" + vs.getPtos2() + vs.getPj() + ";" + vs.getPg() + ";"
+                    + vs.getPp2() + ";" + vs.getPf2() + ";" + vs.getPc2() + ";" + vs.getPtos2() + ";" + vs.getPj() + ";" + vs.getPg() + ";"
                     + vs.getPp() + ";" + vs.getPf() + ";" + vs.getPc() + ";" + vs.getPtos();
             return resultado;
         } else {
@@ -161,39 +160,39 @@ public class Metodos {
         if (vs != null) {
             String resultado = vs.getNombre() + ";" + vs.getPj1() + ";" + vs.getPg1() + ";"
                     + vs.getPp1() + ";" + vs.getPf1() + ";" + vs.getPc1() + ";" + vs.getPtos1() + ";" + vs.getPj2() + ";" + vs.getPg2() + ";"
-                    + vs.getPp2() + ";" + vs.getPf2() + ";" + vs.getPc2() + ";" + vs.getPtos2() + vs.getPj() + ";" + vs.getPg() + ";"
+                    + vs.getPp2() + ";" + vs.getPf2() + ";" + vs.getPc2() + ";" + vs.getPtos2() + ";" + vs.getPj() + ";" + vs.getPg() + ";"
                     + vs.getPp() + ";" + vs.getPf() + ";" + vs.getPc() + ";" + vs.getPtos();
             return resultado;
         } else {
             return "";
         }
     }
-    
-    public static ArrayList<String> getResultadosEquipo(int idEquipo){
-        ArrayList<Resultado> resultados=new ArrayList<>();
+
+    public static ArrayList<String> getResultadosEquipo(int idEquipo) {
+        ArrayList<Resultado> resultados = new ArrayList<>();
         Query q;
         Jornada j;
-        ArrayList<String> out=new ArrayList<>();
-        String JPQL="SELECT r FROM Resultado r WHERE r.equipoLocal =: idequipo OR r.equipoVisitante =: idequipo";
-        String fechaJornada="SELECT j FROM Jornada j WHERE j.numjornada =: idJornada";
-        Query query=em.createQuery(JPQL).setParameter("idequipo", getEquipo(idEquipo));
+        ArrayList<String> out = new ArrayList<>();
+        String JPQL = "SELECT r FROM Resultado r WHERE r.equipoLocal =: idequipo OR r.equipoVisitante =: idequipo";
+        String fechaJornada = "SELECT j FROM Jornada j WHERE j.numjornada =: idJornada";
+        Query query = em.createQuery(JPQL).setParameter("idequipo", getEquipo(idEquipo));
         resultados = (ArrayList<Resultado>) query.getResultList();
         for (Resultado resultado : resultados) {
-            q=em.createQuery(fechaJornada).setParameter("idJornada", resultado.getNumJornada());
-            j=(Jornada)q.getSingleResult();
-            out.add(resultado.getNumJornada()+";"+j.getFecha()+";"+resultado.getEquipoLocal().getNombre()+";"+resultado.getEquipoVisitante().getNombre()+
-                    ";"+resultado.getPuntosLocal()+";"+resultado.getPuntosVisitante());
+            q = em.createQuery(fechaJornada).setParameter("idJornada", resultado.getNumJornada());
+            j = (Jornada) q.getSingleResult();
+            out.add(resultado.getNumJornada() + ";" + j.getFecha() + ";" + resultado.getEquipoLocal().getNombre() + ";" + resultado.getEquipoVisitante().getNombre()
+                    + ";" + resultado.getPuntosLocal() + ";" + resultado.getPuntosVisitante());
         }
         return out;
     }
-    
-    public static ArrayList<String> getClasificaciones(){
+
+    public static ArrayList<String> getClasificaciones() {
         //Falta que lo ordene por puntos
-        ArrayList<String> out=new ArrayList<>();
-        Query q=em.createQuery("SELECT v FROM VClasifica v ORDER BY v.ptos DESC");
-        ArrayList<VClasifica> l=(ArrayList<VClasifica>) q.getResultList();
+        ArrayList<String> out = new ArrayList<>();
+        Query q = em.createQuery("SELECT v FROM VClasifica v ORDER BY v.ptos DESC");
+        ArrayList<VClasifica> l = (ArrayList<VClasifica>) q.getResultList();
         for (VClasifica o : l) {
-            out.add(o.getNombre()+";"+o.getPj()+";"+o.getPg()+";"+o.getPp()+";"+o.getPf()+";"+o.getPc()+";"+o.getPtos());
+            out.add(o.getNombre() + ";" + o.getPj() + ";" + o.getPg() + ";" + o.getPp() + ";" + o.getPf() + ";" + o.getPc() + ";" + o.getPtos());
         }
         return out;
     }
@@ -211,11 +210,11 @@ public class Metodos {
         }
         return result;
     }
-    
-    public static ArrayList<String> getNombresEquipos(){
-        Query q=em.createNamedQuery("Equipo.findAll");
-        ArrayList<String> out=new ArrayList<>();
-        ArrayList<Equipo> resultados=(ArrayList<Equipo>) q.getResultList();
+
+    public static ArrayList<String> getNombresEquipos() {
+        Query q = em.createNamedQuery("Equipo.findAll");
+        ArrayList<String> out = new ArrayList<>();
+        ArrayList<Equipo> resultados = (ArrayList<Equipo>) q.getResultList();
         for (Equipo resultado : resultados) {
             out.add(resultado.getNombre());
         }
@@ -227,9 +226,53 @@ public class Metodos {
         Equipo e = (Equipo) query.getSingleResult();
         return e.getNombre();
     }
-    
-    private static Equipo getEquipo(int idEquipo){
-        Query q=em.createNamedQuery("Equipo.findByIdequipo").setParameter("idequipo", idEquipo);
+
+    private static Equipo getEquipo(int idEquipo) {
+        Query q = em.createNamedQuery("Equipo.findByIdequipo").setParameter("idequipo", idEquipo);
         return (Equipo) q.getSingleResult();
+    }
+
+    public static void updateEquipo(int equipoId, boolean local, int pEL, int pEV) {
+        em.getTransaction().begin();
+        String[] infoEquipo = Metodos.getInfoEquipo(equipoId).split(";");
+        int pGanados = 0;
+        int pPerdidos = 0;
+
+        if (local) {
+            if (pEL > pEV) {
+                pGanados = 1;
+            } else {
+                pPerdidos = 1;
+            }
+
+            em.createQuery("UPDATE Equipo e SET e.jugadosCasa = :jugadosCasa, e.ganadosCasa = :ganadosCasa, "
+                    + "e.perdidosCasa = :perdidosCasa, e.puntosFavorCasa = :puntosFavorCasa, e.puntosContraCasa = :puntosContraCasa "
+                    + "WHERE e.idequipo = :equipoId")
+                    .setParameter("jugadosCasa", Integer.parseInt(infoEquipo[1]) + 1)
+                    .setParameter("ganadosCasa", Integer.parseInt(infoEquipo[2]) + pGanados)
+                    .setParameter("perdidosCasa", Integer.parseInt(infoEquipo[3]) + pPerdidos)
+                    .setParameter("puntosFavorCasa", Integer.parseInt(infoEquipo[4]) + pEL)
+                    .setParameter("puntosContraCasa", Integer.parseInt(infoEquipo[5]) + pEV)
+                    .setParameter("equipoId", equipoId)
+                    .executeUpdate();
+        } else {
+            if (pEL < pEV) {
+                pGanados = 1;
+            } else {
+                pPerdidos = 1;
+            }
+
+            em.createQuery("UPDATE Equipo e SET e.jugadosFuera = :jugadosFuera, e.ganadosFuera = :ganadosFuera, "
+                    + "e.perdidosFuera = :perdidosFuera, e.puntosFavorFuera = :puntosFavorFuera, e.puntosContraFuera = :puntosContraFuera "
+                    + "WHERE e.idequipo = :equipoId")
+                    .setParameter("jugadosFuera", Integer.parseInt(infoEquipo[7]) + 1)
+                    .setParameter("ganadosFuera", Integer.parseInt(infoEquipo[8]) + pGanados)
+                    .setParameter("perdidosFuera", Integer.parseInt(infoEquipo[9]) + pPerdidos)
+                    .setParameter("puntosFavorFuera", Integer.parseInt(infoEquipo[10]) + pEV)
+                    .setParameter("puntosContraFuera", Integer.parseInt(infoEquipo[11]) + pEL)
+                    .setParameter("equipoId", equipoId)
+                    .executeUpdate();
+        }
+        em.getTransaction().commit();
     }
 }
