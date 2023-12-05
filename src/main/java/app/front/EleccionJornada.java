@@ -18,6 +18,7 @@ public class EleccionJornada extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
         this.setResizable(false);
         initComponents();
+        
         img_Fondo.setIcon(new ImageIcon("./src/main/java/img/Img2.jpg"));
         rellenarJornadas();
          
@@ -100,7 +101,7 @@ public class EleccionJornada extends javax.swing.JFrame {
 
     private void btn_ConsultarInfoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_ConsultarInfoActionPerformed
          idJornada = cb_SeleccionJornada.getSelectedIndex() + 1;
-
+         
         // Verificar si la jornada está dentro del rango permitido (1 a 7)
         if (idJornada >= 1 && idJornada <= 7) {
             JOptionPane.showMessageDialog(this, "La jornada que ha saleccionado ha terminado, porfavor seleccione una jornada más reciente.", "Jornada Inválida", JOptionPane.WARNING_MESSAGE);

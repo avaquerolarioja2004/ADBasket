@@ -2,6 +2,7 @@ package app.front;
 
 import app.back.Libreria;
 import app.back.Metodos;
+import java.awt.event.KeyEvent;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -18,6 +19,7 @@ public class EleccionPartido extends javax.swing.JFrame {
     
     private String equipoLocalSeleccionado;
     private String equipoVisitanteSeleccionado;
+    private boolean partidoSeleccionado = false;
     
     public EleccionPartido() {
         this.setLocationRelativeTo(null);
@@ -42,7 +44,28 @@ public class EleccionPartido extends javax.swing.JFrame {
                 }
             }
         });
+        PuntosLocal.addKeyListener(new java.awt.event.KeyAdapter() {
+            @Override
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                soloNumeros(evt);
+            }
+        });
+
+        // Agregar KeyListener a PuntosVisitante
+        PuntosVisitante.addKeyListener(new java.awt.event.KeyAdapter() {
+            @Override
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                soloNumeros(evt);
+            }
+        });
     }
+    private void soloNumeros(KeyEvent evt) {
+        char c = evt.getKeyChar();
+        if (!Character.isDigit(c)) {
+            evt.consume(); // Ignorar la tecla presionada si no es un número
+        }
+    }
+
     public void rellenarPartidos(int idJornada){
         limpiarTabla();
     
@@ -70,7 +93,7 @@ public class EleccionPartido extends javax.swing.JFrame {
     }
     
     public JComboBox<String> getComboBox() {
-    return getComboBox();
+        return getComboBox();
     } 
     
 
@@ -121,6 +144,11 @@ public class EleccionPartido extends javax.swing.JFrame {
                 "Local", "Visitante"
             }
         ));
+        tb_TablaPartidos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tb_TablaPartidosMouseClicked(evt);
+            }
+        });
         jScrollPane2.setViewportView(tb_TablaPartidos);
 
         txt_ELocal.setFont(new java.awt.Font("NSimSun", 1, 24)); // NOI18N
@@ -130,11 +158,11 @@ public class EleccionPartido extends javax.swing.JFrame {
         txt_EVisitante.setText("E.V.->");
 
         txt_NomELocal.setFont(new java.awt.Font("NSimSun", 0, 18)); // NOI18N
-        txt_NomELocal.setText("equipo1");
+        txt_NomELocal.setText("Equipo Local");
         txt_NomELocal.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
         txt_NomEVisitante.setFont(new java.awt.Font("NSimSun", 0, 18)); // NOI18N
-        txt_NomEVisitante.setText("equipo2");
+        txt_NomEVisitante.setText("Equipo Visitante");
         txt_NomEVisitante.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
         txt_PtosELocal.setFont(new java.awt.Font("NSimSun", 1, 24)); // NOI18N
@@ -249,14 +277,14 @@ public class EleccionPartido extends javax.swing.JFrame {
                     .addComponent(txt_ELocal, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txt_PtosELocal, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(PuntosLocal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txt_NomELocal, javax.swing.GroupLayout.DEFAULT_SIZE, 32, Short.MAX_VALUE))
+                    .addComponent(txt_NomELocal, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(PuntosVisitante, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(txt_EVisitante, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(txt_PtosEVisitante, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(txt_NomEVisitante, javax.swing.GroupLayout.DEFAULT_SIZE, 32, Short.MAX_VALUE)))
+                        .addComponent(txt_NomEVisitante, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addGap(58, 58, 58)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btn_ConsultarInfo)
@@ -268,7 +296,7 @@ public class EleccionPartido extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -293,6 +321,11 @@ public class EleccionPartido extends javax.swing.JFrame {
         int idEL = app.back.Metodos.getIdEquipoByName(equipoLocalSeleccionado);
         int idEV = app.back.Metodos.getIdEquipoByName(equipoVisitanteSeleccionado);
 
+        if (!partidoSeleccionado) {
+            JOptionPane.showMessageDialog(this, "Debe seleccionar un partido antes de grabar el resultado", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
         String puntosLocalText = PuntosLocal.getText();
         String puntosVisitanteText = PuntosVisitante.getText();
         if (puntosLocalText.isEmpty() || puntosVisitanteText.isEmpty()) {
@@ -358,6 +391,25 @@ public class EleccionPartido extends javax.swing.JFrame {
         }
         
     }//GEN-LAST:event_btn_AtrasActionPerformed
+
+    private void tb_TablaPartidosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tb_TablaPartidosMouseClicked
+        // TODO add your handling code here:
+        int selectedRow = tb_TablaPartidos.getSelectedRow();
+        if (selectedRow >= 0 && selectedRow < tb_TablaPartidos.getRowCount()) {
+            equipoLocalSeleccionado = tb_TablaPartidos.getValueAt(selectedRow, 0).toString();
+            equipoVisitanteSeleccionado = tb_TablaPartidos.getValueAt(selectedRow, 1).toString();
+
+            txt_NomELocal.setText(equipoLocalSeleccionado);
+            txt_NomEVisitante.setText(equipoVisitanteSeleccionado);
+
+            // Habilita los campos de puntuación al seleccionar un partido
+            PuntosLocal.setEnabled(true);
+            PuntosVisitante.setEnabled(true);
+
+            // Actualiza la bandera de partido seleccionado
+            partidoSeleccionado = true;
+        }
+    }//GEN-LAST:event_tb_TablaPartidosMouseClicked
 
     /**
      * @param args the command line arguments

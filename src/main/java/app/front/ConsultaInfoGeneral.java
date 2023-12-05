@@ -97,7 +97,7 @@ public class ConsultaInfoGeneral extends javax.swing.JFrame {
         });
         tabla.setViewportView(tb_InfoGeneral);
 
-        jPanel1.add(tabla, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 230, 939, 360));
+        jPanel1.add(tabla, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 230, 939, 320));
 
         gbtn_EG.add(rbtn_Equipo);
         rbtn_Equipo.setFont(new java.awt.Font("NSimSun", 1, 24)); // NOI18N
