@@ -48,38 +48,38 @@ public class EleccionPartido extends javax.swing.JFrame {
             }
         });
         
-        PuntosLocal.addKeyListener(new KeyAdapter() {
-            @Override
-            public void keyTyped(KeyEvent e) {
-                char c = e.getKeyChar();
-                if (!Character.isDigit(c) && c != '-') {
-                    e.consume();
-                }
-
-                // Allow '-' only at the beginning
-                if (c == '-' && PuntosLocal.getCaretPosition() > 0) {
-                    e.consume();
-                }
-            }
-        });
-
-        PuntosVisitante.addKeyListener(new KeyAdapter() {
-            @Override
-            public void keyTyped(KeyEvent e) {
-                char c = e.getKeyChar();
-                if (!Character.isDigit(c) && c != '-') {
-                    e.consume();
-                }
-
-                // Allow '-' only at the beginning
-                if (c == '-' && PuntosVisitante.getCaretPosition() > 0) {
-                    e.consume();
-                }
-            }
-        });
-
+//        PuntosLocal.addKeyListener(new KeyAdapter() {
+//            @Override
+//            public void keyTyped(KeyEvent e) {
+//                char c = e.getKeyChar();
+//                if (!Character.isDigit(c) && c != '-') {
+//                    e.consume();
+//                }
+//
+//                // Allow '-' only at the beginning
+//                if (c == '-' && PuntosLocal.getCaretPosition() > 0) {
+//                    e.consume();
+//                }
+//            }
+//        });
+//
+//        PuntosVisitante.addKeyListener(new KeyAdapter() {
+//            @Override
+//            public void keyTyped(KeyEvent e) {
+//                char c = e.getKeyChar();
+//                if (!Character.isDigit(c) && c != '-') {
+//                    e.consume();
+//                }
+//
+//                // Allow '-' only at the beginning
+//                if (c == '-' && PuntosVisitante.getCaretPosition() > 0) {
+//                    e.consume();
+//                }
+//            }
+//        });
+//
+//    }
     }
-
     public void rellenarPartidos(int idJornada){
         limpiarTabla();
     
@@ -111,12 +111,25 @@ public class EleccionPartido extends javax.swing.JFrame {
     return getComboBox();
     }
     
-    private boolean sonPuntosIguales() {
-        int pEL = Integer.parseInt(PuntosLocal.getText());
-        int pEV = Integer.parseInt(PuntosVisitante.getText());
-        return pEL == pEV;
+    private boolean validacionPuntos() {
+        try {
+            if (PuntosLocal.getText().isEmpty() || PuntosVisitante.getText().isEmpty()) {
+                return true;
+            }
+            
+            int pEL = Integer.parseInt(PuntosLocal.getText());
+            int pEV = Integer.parseInt(PuntosVisitante.getText());
+            
+            if (pEL == pEV || pEL < 0 || pEV < 0) {
+                return true;
+            }
+
+            return false;
+        } catch (NumberFormatException e) {
+            return true;
+        }
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -332,11 +345,14 @@ public class EleccionPartido extends javax.swing.JFrame {
 
     private void btn_GrabarResultadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_GrabarResultadoActionPerformed
         // TODO add your handling code here:
-        if (sonPuntosIguales()) {
-            JOptionPane.showMessageDialog(this, "No se permite empate. Ingrese puntajes diferentes.", "Error", JOptionPane.ERROR_MESSAGE);
+        if (validacionPuntos()) {
+            JOptionPane.showMessageDialog(this, "Compruebe los campos de puntuaje. \n"
+                    + "-No ha compleato correctamente los campos.\n"
+                    + "-No está permitido el empate.\n"
+                    + "-No está permitido introducir valores negativos.", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
-
+        
         // Resto del código para grabar el resultado
         int jornada = EleccionJornada.idJornada; 
         int idEL = app.back.Metodos.getIdEquipoByName(equipoLocalSeleccionado);
