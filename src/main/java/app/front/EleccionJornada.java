@@ -1,5 +1,7 @@
 package app.front;
 
+import app.back.Libreria;
+import app.back.Metodos;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -10,28 +12,29 @@ import javax.swing.JOptionPane;
 
 public class EleccionJornada extends javax.swing.JFrame {
 
-    private JComboBox <String> comboBox;
+    private JComboBox<String> comboBox;
     private EleccionPartido eleccionPartido;
-    public static int idJornada; 
-    
+    public static int idJornada;
+    private final String BBDD = "E:\\AD_ServersYConectores\\SGBD\\sqlite\\BALONCESTO.db";
+
     public EleccionJornada() throws SQLException {
         this.setLocationRelativeTo(null);
         this.setResizable(false);
         initComponents();
-        
+
         img_Fondo.setIcon(new ImageIcon("./src/main/java/img/Img2.jpg"));
         rellenarJornadas();
-         
+
     }
-    
+
     public void rellenarJornadas() {
         ArrayList<String> jornadas = app.back.Metodos.getJornadas();
-        for(String item : jornadas){
-          // Reemplazar ; con :
-          String nuevoItem = "Jornada " + item.replace(";", ":");
-          this.cb_SeleccionJornada.addItem(nuevoItem);
-        }      
-  }
+        for (String item : jornadas) {
+            // Reemplazar ; con :
+            String nuevoItem = "Jornada " + item.replace(";", ":");
+            this.cb_SeleccionJornada.addItem(nuevoItem);
+        }
+    }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -100,23 +103,24 @@ public class EleccionJornada extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_ConsultarInfoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_ConsultarInfoActionPerformed
-         idJornada = cb_SeleccionJornada.getSelectedIndex() + 1;
-         
-        // Verificar si la jornada está dentro del rango permitido (1 a 7)
-        if (idJornada >= 1 && idJornada <= 7) {
-            JOptionPane.showMessageDialog(this, "La jornada que ha saleccionado ha terminado, porfavor seleccione una jornada más reciente.", "Jornada Inválida", JOptionPane.WARNING_MESSAGE);
-        } else {
-            EleccionPartido eleccionPartido = new EleccionPartido();
-            eleccionPartido.setVisible(true);
-            this.dispose();
-            
+        idJornada = cb_SeleccionJornada.getSelectedIndex() + 1;
+
+        // Verificar si la jornada tiene partidos
+        //Cambiar la ruta de la base de datos
+        if (Metodos.getPartidosJornada(idJornada, Libreria.creaConexion("sqlite", BBDD)).isEmpty()) {
+            JOptionPane.showMessageDialog(this, "La jornada que ha saleccionado ha terminado, no podrá grabar más resultados.", "Jornada Terminada", JOptionPane.WARNING_MESSAGE);
         }
+        EleccionPartido eleccionPartido = new EleccionPartido();
+        eleccionPartido.setVisible(true);
+        this.dispose();
+
+
     }//GEN-LAST:event_btn_ConsultarInfoActionPerformed
 
     private void cb_SeleccionJornadaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cb_SeleccionJornadaActionPerformed
-        
+
     }//GEN-LAST:event_cb_SeleccionJornadaActionPerformed
-    
+
     public static void main(String args[]) {
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {

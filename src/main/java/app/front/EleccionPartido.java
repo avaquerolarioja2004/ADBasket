@@ -20,6 +20,7 @@ public class EleccionPartido extends javax.swing.JFrame {
     private String equipoLocalSeleccionado;
     private String equipoVisitanteSeleccionado;
     private boolean partidoSeleccionado = false;
+    private final String BBDD="E:\\AD_ServersYConectores\\SGBD\\sqlite\\BALONCESTO.db";
     
     public EleccionPartido() {
         this.setLocationRelativeTo(null);
@@ -70,7 +71,7 @@ public class EleccionPartido extends javax.swing.JFrame {
         limpiarTabla();
     
         try {
-            Connection c = Libreria.creaConexion("sqlite", "C:\\Users\\elipu\\OneDrive\\Escritorio\\AD_ServersYConectores\\SGBD\\sqlite\\BALONCESTO.db");
+            Connection c = Libreria.creaConexion("sqlite", BBDD);
             if (c != null) {
                 ArrayList<String> partidos = app.back.Metodos.getPartidosJornada(idJornada, c);
                 DefaultTableModel model = (DefaultTableModel) tb_TablaPartidos.getModel();
