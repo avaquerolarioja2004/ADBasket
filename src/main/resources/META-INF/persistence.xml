@@ -10,7 +10,6 @@
     <properties>
       <property name="jakarta.persistence.jdbc.driver" value="org.sqlite.JDBC"/>
       <property name="hibernate.dialect" value="org.hibernate.dialect.SQLiteDialect"/>
-      <property name="hibernate.show_sql" value="true"/>
       <!-- Cambiar el jdbc-->
       <property name="javax.persistence.jdbc.url" value="jdbc:sqlite:C:\Users\elipu\OneDrive\Escritorio\AD_ServersYConectores\SGBD\sqlite\BALONCESTO.db"/>
       <property name="javax.persistence.jdbc.user" value=""/>

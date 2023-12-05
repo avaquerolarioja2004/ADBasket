@@ -135,12 +135,12 @@
               <Properties>
                 <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
                   <Table columnCount="6" rowCount="1">
-                    <Column editable="true" title="P.J." type="java.lang.Integer"/>
-                    <Column editable="true" title="P.G." type="java.lang.Integer"/>
-                    <Column editable="true" title="P.P." type="java.lang.Integer"/>
-                    <Column editable="true" title="P.F." type="java.lang.Integer"/>
-                    <Column editable="true" title="P.C." type="java.lang.Integer"/>
-                    <Column editable="true" title="Ptos." type="java.lang.Integer"/>
+                    <Column editable="true" title="P.J." type="java.lang.String"/>
+                    <Column editable="true" title="P.G." type="java.lang.String"/>
+                    <Column editable="true" title="P.P." type="java.lang.String"/>
+                    <Column editable="true" title="P.F." type="java.lang.String"/>
+                    <Column editable="true" title="P.C." type="java.lang.String"/>
+                    <Column editable="true" title="Ptos." type="java.lang.String"/>
                   </Table>
                 </Property>
               </Properties>
@@ -189,8 +189,8 @@
                     <Column editable="true" title="Fecha" type="java.lang.String"/>
                     <Column editable="true" title="Local" type="java.lang.String"/>
                     <Column editable="true" title="Visitante" type="java.lang.String"/>
-                    <Column editable="true" title="Ptos. Local" type="java.lang.Integer"/>
-                    <Column editable="true" title="Ptos. Visitante" type="java.lang.Integer"/>
+                    <Column editable="true" title="Ptos. Local" type="java.lang.String"/>
+                    <Column editable="true" title="Ptos. Visitante" type="java.lang.String"/>
                   </Table>
                 </Property>
               </Properties>
@@ -268,12 +268,12 @@
               <Properties>
                 <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
                   <Table columnCount="6" rowCount="1">
-                    <Column editable="true" title="P.J." type="java.lang.Integer"/>
-                    <Column editable="true" title="P.G." type="java.lang.Integer"/>
-                    <Column editable="true" title="P.P." type="java.lang.Integer"/>
-                    <Column editable="true" title="P.F." type="java.lang.Integer"/>
-                    <Column editable="true" title="P.C." type="java.lang.Integer"/>
-                    <Column editable="true" title="Ptos." type="java.lang.Integer"/>
+                    <Column editable="true" title="P.J." type="java.lang.String"/>
+                    <Column editable="true" title="P.G." type="java.lang.String"/>
+                    <Column editable="true" title="P.P." type="java.lang.String"/>
+                    <Column editable="true" title="P.F." type="java.lang.String"/>
+                    <Column editable="true" title="P.C." type="java.lang.String"/>
+                    <Column editable="true" title="Ptos." type="java.lang.String"/>
                   </Table>
                 </Property>
               </Properties>
@@ -310,12 +310,12 @@
               <Properties>
                 <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
                   <Table columnCount="6" rowCount="1">
-                    <Column editable="true" title="P.J." type="java.lang.Integer"/>
-                    <Column editable="true" title="P.G." type="java.lang.Integer"/>
-                    <Column editable="true" title="P.P." type="java.lang.Integer"/>
-                    <Column editable="true" title="P.F." type="java.lang.Integer"/>
-                    <Column editable="true" title="P.C." type="java.lang.Integer"/>
-                    <Column editable="true" title="Ptos." type="java.lang.Integer"/>
+                    <Column editable="true" title="P.J." type="java.lang.String"/>
+                    <Column editable="true" title="P.G." type="java.lang.String"/>
+                    <Column editable="true" title="P.P." type="java.lang.String"/>
+                    <Column editable="true" title="P.F." type="java.lang.String"/>
+                    <Column editable="true" title="P.C." type="java.lang.String"/>
+                    <Column editable="true" title="Ptos." type="java.lang.String"/>
                   </Table>
                 </Property>
               </Properties>

@@ -104,9 +104,9 @@
                     <Column editable="true" title="P.J." type="java.lang.String"/>
                     <Column editable="true" title="P.G." type="java.lang.String"/>
                     <Column editable="true" title="P.P." type="java.lang.String"/>
-                    <Column editable="true" title="P.F." type="java.lang.Integer"/>
-                    <Column editable="true" title="P.C." type="java.lang.Integer"/>
-                    <Column editable="true" title="Ptos." type="java.lang.Object"/>
+                    <Column editable="true" title="P.F." type="java.lang.String"/>
+                    <Column editable="true" title="P.C." type="java.lang.String"/>
+                    <Column editable="true" title="Ptos." type="java.lang.String"/>
                   </Table>
                 </Property>
               </Properties>
